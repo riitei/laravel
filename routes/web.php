@@ -17,13 +17,24 @@
 //});
 
 
+Route::any('/', 'Admin\LoginController@login');
+Route::any('admin/check_code', 'Admin\LoginController@verificationCode');
+Route::any('get', 'Admin\LoginController@getcode');
+
+
+Route::any('test', 'TestController@testDB');
+
+
+//-----
+//**** 範例程式 middleware
 Route::any('admin', 'Admin\IndexController@index');
 Route::any('blade', 'TestController\ViewController@blabe'); //blade
 Route::any('subViewIndex', 'TestController\ViewController@subViewIndexInclude');// sub view blade index 未切割
 Route::any('subViewInclude', 'TestController\ViewController@subViewInclude');// sub view blade // 切割子視窗
 Route::any('subViewLayouts', 'TestController\ViewController@subViewLayouts');// sub view blade // 切割子視窗
-Route::any('/', 'TestController\IndexController@indexDB');// sub view blade // 切割子視窗
-
+Route::any('/indexDB', 'TestController\IndexController@indexDB');// sub view blade // 切割子視窗
+//**** 範例程式 middleware
+//-----
 //**** 中間鍵 middleware
 /*
  * php artisan make:middleware AdminLogin
