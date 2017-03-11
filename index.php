@@ -2,7 +2,7 @@
 
 // 使用原生PHP SESSION
 
-// session_start();
+session_start();
 //
 
 /**

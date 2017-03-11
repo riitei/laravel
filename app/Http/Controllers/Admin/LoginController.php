@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Lib\Code\VerificationCode;
+use Illuminate\Http\Request;
 
 /*
  * require_once和include_once
@@ -19,9 +20,25 @@ use App\Http\Lib\Code\VerificationCode;
 
 class LoginController extends CommonController
 {
-    public function login()
+    public function login(Request $request)
     {
-        return view('admin.login');
+        if ($request->all()) {
+//            echo '1';
+            // $input = Input::all();
+            // $input['user_name'];
+            $VerificationCode = new VerificationCode();
+//            dd( $request->input('user_name'));
+
+            if (strtoupper($request->input('code')) != $VerificationCode->get()) {
+                // strtoupper() 輸入轉大寫
+                return back()->with('msg', '驗證碼錯誤');// 前一個請求頁面
+            }
+
+        } else {
+            return view('admin.login');
+
+        }
+
     }
 
     public function verificationCode()
@@ -30,9 +47,4 @@ class LoginController extends CommonController
         return $VerificationCode->make();
     }
 
-    public function getCode()
-    {
-        $VerificationCode = new VerificationCode();
-        echo $VerificationCode->get();
-    }
 }

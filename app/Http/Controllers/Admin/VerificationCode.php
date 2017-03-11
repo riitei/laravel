@@ -1,9 +1,11 @@
 <?php
-namespace App\Http\Lib\Code;
 
-class VerificationCode
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+
+class VerificationCode extends Controller
 {
-
     //资源
     private $img;
     //画布宽度
@@ -33,7 +35,7 @@ class VerificationCode
     public function make()
     {
         if (empty($this->font)) {
-            $this->font = __DIR__ . '/checkcode.ttf';
+            $this->font = __DIR__ . '/consola.ttf';
         }
         $this->create();//生成验证码
         header("Content-type:image/png");
@@ -117,10 +119,10 @@ class VerificationCode
             $code .= $this->codeStr [mt_rand(0, strlen($this->codeStr) - 1)];
         }
         $this->code = strtoupper($code);
-        $_SESSION['code'] = $this->code;
+        //$_SESSION['code'] = $this->code;
 
-        // Session::put('code',$this->code);
-        // $request->session()->push('code',$this->code);
+        Session::put('code', $this->code);
+        //$request->session()->push('code',$this->code);
     }
 
     //设置高度
@@ -211,14 +213,14 @@ class VerificationCode
 
     public function get()
     {
-        return $_SESSION['code'];
+        //return $_SESSION['code'];
 
-//        if(Session::has('code')){
-//
-//            return 'yes_'.\Session::get('code');
-//        }else{
-//            return 'no';
-//        }
+        if (Session::has('code')) {
+
+            return 'yes_' . \Session::get('code');
+        } else {
+            return 'no';
+        }
 //
 //         if( $request->session()->has('code')){
 //             return $request->session()->get();

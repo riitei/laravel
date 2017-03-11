@@ -17,7 +17,7 @@
 //});
 
 
-Route::any('/', 'Admin\LoginController@login');
+Route::any('admin/login', 'Admin\LoginController@login');
 Route::any('admin/check_code', 'Admin\LoginController@verificationCode');
 Route::any('get', 'Admin\LoginController@getcode');
 
