@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Lib\Code\VerificationCode;
+use App\Http\Model\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 /*
  * require_once和include_once
@@ -29,12 +31,29 @@ class LoginController extends CommonController
             $VerificationCode = new VerificationCode();
 //            dd( $request->input('user_name'));
 
-            if (strtoupper($request->input('code')) != $VerificationCode->get()) {
-                // strtoupper() 輸入轉大寫
-                return back()->with('msg', '驗證碼錯誤');// 前一個請求頁面
+//            if (strtoupper($request->input('code')) != $VerificationCode->get()) {
+//                // strtoupper() 輸入轉大寫
+//                return back()->with('msg', '驗證碼錯誤');// 前一個請求頁面
+//            }
+
+            echo strtoupper($request->input('code')) . "_" . $VerificationCode->get() . '<br><br>';
+            // 加密 每次加密字串不一樣，但能反解密
+            $user = User::select('user_name', 'user_password')
+                ->where('user_name', $request->input('user_name'))->first();
+            //
+            if ($request->input('user_name') !== $user['user_name'] ||
+                $request->input('user_password') !== Crypt::decrypt($user['user_password'])
+            ) {
+                return back()->with('msg', '用戶名或密碼錯誤!!');
+
             }
+            $request->session()->put(['user' => $user]);
+            // session(['user'=>$user]); // 語法相同
+            // Session::put('user',$user);
+            dd($request->session()->get('user'));
 
         } else {
+
             return view('admin.login');
 
         }
@@ -45,6 +64,23 @@ class LoginController extends CommonController
     {
         $VerificationCode = new VerificationCode();
         return $VerificationCode->make();
+    }
+
+    // 加解密
+    public function crypt()
+    {
+        $str = '123';
+        echo Crypt::encrypt($str) . '<br>'; // 加密 每次加密字串不一樣，但能反解密
+        echo Crypt::decrypt(
+            "eyJpdiI6Ilg4Qkd0TDZMT0QxNzBSZjhBaUpPWnc9PSIsI
+            nZhbHVlIjoiOEhRR0JHbmJUbXM3czBMVVM5T1Z6Zz09Iiwi
+            bWFjIjoiMjRlOTUxYzZlMzJkOTZhZmI2ZTExYzdlZmQ4YTdl
+            YTRlNjBiM2E4NWFjOTQ1MzI3OWUwNTMxZjA4NzI5Yjk0MiJ9");
+        // 解密
+//        $dbWrite  = new TestModel();
+//        $dbWrite->user_name = 'admin';
+//        $dbWrite->user_password = Crypt::encrypt('admin');
+//        $dbWrite->save();
     }
 
 }

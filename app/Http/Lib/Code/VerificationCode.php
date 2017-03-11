@@ -117,6 +117,7 @@ class VerificationCode
             $code .= $this->codeStr [mt_rand(0, strlen($this->codeStr) - 1)];
         }
         $this->code = strtoupper($code);
+        //       session('code', $this->code);
         $_SESSION['code'] = $this->code;
 
         // Session::put('code',$this->code);
@@ -212,8 +213,8 @@ class VerificationCode
     public function get()
     {
         return $_SESSION['code'];
-
-//        if(Session::has('code')){
+//        return Session::get('code');
+        //        if(Session::has('code')){
 //
 //            return 'yes_'.\Session::get('code');
 //        }else{
