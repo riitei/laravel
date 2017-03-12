@@ -19,7 +19,8 @@
 
 Route::any('admin/login', 'Admin\LoginController@login');
 Route::any('admin/check_code', 'Admin\LoginController@verificationCode');
-Route::any('/', 'Admin\LoginController@crypt');
+//
+Route::any('admin/info', 'Admin\IndexController@info');
 
 Route::any('test', 'TestController@testDB');
 

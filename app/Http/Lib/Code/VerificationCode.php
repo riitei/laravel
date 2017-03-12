@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Lib\Code;
 
+
 class VerificationCode
 {
 
@@ -117,11 +118,11 @@ class VerificationCode
             $code .= $this->codeStr [mt_rand(0, strlen($this->codeStr) - 1)];
         }
         $this->code = strtoupper($code);
-        //       session('code', $this->code);
-        $_SESSION['code'] = $this->code;
+        session('code', $this->code);
+        //$_SESSION['code'] = $this->code;
 
         // Session::put('code',$this->code);
-        // $request->session()->push('code',$this->code);
+        //$request->session()->put(['code'=>$this->code]);
     }
 
     //设置高度
@@ -212,8 +213,8 @@ class VerificationCode
 
     public function get()
     {
-        return $_SESSION['code'];
-//        return Session::get('code');
+        // return $_SESSION['code'];
+        return session('code');
         //        if(Session::has('code')){
 //
 //            return 'yes_'.\Session::get('code');
@@ -222,7 +223,7 @@ class VerificationCode
 //        }
 //
 //         if( $request->session()->has('code')){
-//             return $request->session()->get();
+        //         return $request->session()->get('code');
 //         }
     }
 

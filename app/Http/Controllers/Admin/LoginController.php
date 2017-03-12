@@ -35,8 +35,6 @@ class LoginController extends CommonController
 //                // strtoupper() 輸入轉大寫
 //                return back()->with('msg', '驗證碼錯誤');// 前一個請求頁面
 //            }
-
-            echo strtoupper($request->input('code')) . "_" . $VerificationCode->get() . '<br><br>';
             // 加密 每次加密字串不一樣，但能反解密
             $user = User::select('user_name', 'user_password')
                 ->where('user_name', $request->input('user_name'))->first();
@@ -49,8 +47,9 @@ class LoginController extends CommonController
             }
             $request->session()->put(['user' => $user]);
             // session(['user'=>$user]); // 語法相同
-            // Session::put('user',$user);
-            dd($request->session()->get('user'));
+
+            // dd($request->session()->get('user'));
+            return view('admin.index');
 
         } else {
 
