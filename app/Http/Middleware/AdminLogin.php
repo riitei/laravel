@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Session;
 
 class AdminLogin
 {
@@ -16,15 +15,19 @@ class AdminLogin
      */
     public function handle($request, Closure $next)
     {
-        //echo \Session::get('admin')."<br><br>";
-        if (!Session('admin')) {
-            echo 'session is not value <br><br>';
-
-            //  return redirect('admin_middleware/index');
-        } else {
-            echo Session::get('admin') . ' session is value <br><br>';
+        // echo 'middleware_'.$request->session()->get('user')."<br>";
+//        // 方法一
+//        if(!session('user')){
+//           return redirect('admin/login');// 加上這一句出現 就出錯
+//        }
+//        // 方法二
+//        if(!Session::get('user')){
+//            return redirect ('admin/login');// 加上這一句出現 就出錯
+//        }
+        // 方法三
+        if (!$request->session()->has('user')) {
+            return redirect('admin/login');// 加上這一句出現 就出錯
         }
-        //echo 'middleware adminlogin new <br><br>';
         return $next($request);
     }
 }

@@ -57,7 +57,8 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         //
-        'admin.login' => \App\Http\Middleware\AdminLogin::class,
+        'test.admin.login' => \App\Http\Middleware\TestAdminLogin::class,
+        'admin_login' => \App\Http\Middleware\AdminLogin::class,
         // 使用php artisan make:middleware AdminLogin
         // App\Http\Kernel 在 $routeMiddleware 註冊
     ];

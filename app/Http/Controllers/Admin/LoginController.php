@@ -45,14 +45,14 @@ class LoginController extends CommonController
                 return back()->with('msg', '用戶名或密碼錯誤!!');
 
             }
-            $request->session()->put(['user' => $user]);
+            $request->session()->put(['user' => $user]);// 把值存放在 session
             // session(['user'=>$user]); // 語法相同
 
             // dd($request->session()->get('user'));
-            return view('admin.index');
+            return redirect('admin/index');
 
         } else {
-
+            $request->session()->pull('user'); // 刪除 session 值
             return view('admin.login');
 
         }
@@ -63,6 +63,12 @@ class LoginController extends CommonController
     {
         $VerificationCode = new VerificationCode();
         return $VerificationCode->make();
+    }
+
+    public function quit(Request $request)
+    {
+        $request->session()->pull('user');
+        return redirect('admin/login');
     }
 
     // 加解密

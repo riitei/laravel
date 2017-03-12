@@ -39,7 +39,7 @@
                 </ul>
             </li>
             <li>
-                <h3><i class="fa fa-fw fa-thumb-tack"></i>工具导航</h3>
+                <h3><i class="fa fa-fw fa-thumb-tack"></i>工具導航</h3>
                 <ul class="sub_menu">
                     <li><a href="http://www.yeahzan.com/fa/facss.html" target="main"><i class="fa fa-fw fa-font"></i>圖標調用</a>
                     </li>

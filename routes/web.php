@@ -15,12 +15,21 @@
 //Route::get('/', function () {
 //    return view('welcome');
 //});
-
-
-Route::any('admin/login', 'Admin\LoginController@login');
-Route::any('admin/check_code', 'Admin\LoginController@verificationCode');
-//
-Route::any('admin/info', 'Admin\IndexController@info');
+//-----
+/*
+ * php artisan make:middleware AdminLogin
+ *    App\Http\Kernel 在 $routeMiddleware 註冊
+ * 小心格式 [       ,'middleware'=>['web',.....]  ]
+ **/
+Route::any('admin/check_code', 'admin\LoginController@verificationCode');
+Route::any('admin/login', 'admin\LoginController@login'); // 管理者登入 （不能寫在middleware）
+// 管理者網頁的集合
+Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['web', 'admin_login']], function () {
+//    Route::any('login', 'LoginController@login'); laravel v5.4 不能這樣寫
+    Route::any('index', 'IndexController@index');
+    Route::any('info', 'IndexController@info');
+    Route::any('quit', 'LoginController@quit');
+});
 
 Route::any('test', 'TestController@testDB');
 
@@ -32,7 +41,7 @@ Route::any('blade', 'TestController\ViewController@blabe'); //blade
 Route::any('subViewIndex', 'TestController\ViewController@subViewIndexInclude');// sub view blade index 未切割
 Route::any('subViewInclude', 'TestController\ViewController@subViewInclude');// sub view blade // 切割子視窗
 Route::any('subViewLayouts', 'TestController\ViewController@subViewLayouts');// sub view blade // 切割子視窗
-Route::any('/indexDB', 'TestController\IndexController@indexDB');// sub view blade // 切割子視窗
+Route::any('indexDB', 'TestController\IndexController@indexDB');// sub view blade // 切割子視窗
 //**** 範例程式 middleware
 //-----
 //**** 中間鍵 middleware
@@ -41,7 +50,7 @@ Route::any('/indexDB', 'TestController\IndexController@indexDB');// sub view bla
  *    App\Http\Kernel 在 $routeMiddleware 註冊
  * 小心格式 [       ,'middleware'=>['web',.....]  ]
  **/
-Route::group(['prefix' => 'admin_middleware', 'namespace' => 'AdminMiddleware', 'middleware' => ['web', 'admin.login']], function () {
+Route::group(['prefix' => 'admin_middleware', 'namespace' => 'AdminMiddleware', 'middleware' => ['web', 'test.admin.login']], function () {
     Route::get('login', 'IndexController@login');
     Route::get('index', 'IndexController@index');
 
