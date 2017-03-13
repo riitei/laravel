@@ -71,7 +71,7 @@ class LoginController extends CommonController
         return redirect('admin/login');
     }
 
-    // 加解密
+    //  框架 加解密
     public function crypt()
     {
         $str = '123';

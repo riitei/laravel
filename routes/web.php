@@ -12,9 +12,7 @@
 |
 */
 //
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/', 'TestController@crypt');
 //-----
 /*
  * php artisan make:middleware AdminLogin
@@ -28,6 +26,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['web
 //    Route::any('login', 'LoginController@login'); laravel v5.4 不能這樣寫
     Route::any('index', 'IndexController@index');
     Route::any('info', 'IndexController@info');
+    Route::any('pass', 'IndexController@password');
     Route::any('quit', 'LoginController@quit');
 });
 
