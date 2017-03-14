@@ -28,20 +28,52 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['web
     Route::any('info', 'IndexController@info');
     Route::any('pass', 'IndexController@password');
     Route::any('quit', 'LoginController@quit');
+    //-----
+    // 使用資源路由
+// php artisan route:list
+// |Domain  | Method     | URI                             | Name             | Action                                                                 | Middleware           |
+// |        | POST       | admin/category                  | category.store   | App\Http\Controllers\admin\CategoryController@store                    | web,admin_login      |
+// |        | GET|HEAD   | admin/category                  | category.index   | App\Http\Controllers\admin\CategoryController@index                    | web,admin_login      |
+// |        | GET|HEAD   | admin/category/create           | category.create  | App\Http\Controllers\admin\CategoryController@create                   | web,admin_login      |
+// |        | DELETE     | admin/category/{category}       | category.destroy | App\Http\Controllers\admin\CategoryController@destroy                  | web,admin_login      |
+// |        | PUT|PATCH  | admin/category/{category}       | category.update  | App\Http\Controllers\admin\CategoryController@update                   | web,admin_login      |
+// |        | GET|HEAD   | admin/category/{category}       | category.show    | App\Http\Controllers\admin\CategoryController@show                     | web,admin_login      |
+// |        | GET|HEAD   | admin/category/{category}/edit  | category.edit    | App\Http\Controllers\admin\CategoryController@edit                     | web,admin_login      |
+//-----
 });
+Route::resource('admin/category', 'Admin\CategoryController');
 
 Route::any('test', 'TestController@testDB');
 
 
 //-----
-//**** 範例程式 middleware
+//**** 範例程式
+//
+//**** 路由資源
+Route::resource('admin/article', 'AdminRouteGroup\ArticleController');
+// php artisan route:list
+// http://laravel.riitei.com/admin/article
+
+/*
+ *| GET|HEAD | admin/article                   | article.index   | App\Http\Controllers\Admin\ArticleController@index   | web|
+ *| POST     | admin/article                   | article.store   | App\Http\Controllers\Admin\ArticleController@store   | web|
+ *| GET|HEAD | admin/article/create            | article.create  | App\Http\Controllers\Admin\ArticleController@create  | web|
+ *| DELETE   | admin/article/{article}         | article.destroy | App\Http\Controllers\Admin\ArticleController@destroy | web|
+ *| GET|HEAD | admin/article/{article}         | article.show    | App\Http\Controllers\Admin\ArticleController@show    | web|
+ *| PUT|PATCH| admin/article/{article}         | article.update  | App\Http\Controllers\Admin\ArticleController@update  | web|
+ *| GET|HEAD | admin/article/{article}/edit    | article.edit    | App\Http\Controllers\Admin\ArticleController@edit    | web|
+ **/
+//**** 路由資源
+
+//-----
 Route::any('admin', 'Admin\IndexController@index');
 Route::any('blade', 'TestController\ViewController@blabe'); //blade
 Route::any('subViewIndex', 'TestController\ViewController@subViewIndexInclude');// sub view blade index 未切割
 Route::any('subViewInclude', 'TestController\ViewController@subViewInclude');// sub view blade // 切割子視窗
 Route::any('subViewLayouts', 'TestController\ViewController@subViewLayouts');// sub view blade // 切割子視窗
 Route::any('indexDB', 'TestController\IndexController@indexDB');// sub view blade // 切割子視窗
-//**** 範例程式 middleware
+//**** 範例程式
+
 //-----
 //**** 中間鍵 middleware
 /*
@@ -115,6 +147,7 @@ Route::get('nameroute03', 'Admin\IndexController@index')->name('profiles'); // r
 
 //****  http://laravelacademy.org/post/6732.html
 // 路由参数总是通过花括号进行包裹，这些参数在路由被执行时会被传递到路由的闭包。路由参数不能包含 - 字符，需要的话可以使用 _ 替代。
+// ('num/{參數}')
 Route::get('num/{id}', function ($id) {
     return 'num_' . $id;
 });
