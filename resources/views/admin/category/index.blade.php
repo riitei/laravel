@@ -47,8 +47,8 @@
             <div class="result_content">
                 <table class="list_tab">
                     <tr>
-                        <th class="tc" width="5%">排序</th>
-                        <th class="tc" width="5%">ID</th>
+                        <th class="tc" style="width: 10%">排序</th>
+                        <th class="tc" style="width: 10%">ID</th>
                         <th>分類名稱</th>
                         <th>標題</th>
                         <th>查看次數</th>
@@ -57,10 +57,16 @@
                     </tr>
                     @foreach($data as $value)
                         <tr>
-                            <td class="tc">
-                                <input type="text" name="ord[]" value="0">
-                            </td>
-                            <td class="tc">{{$value->cate_id}}</td>
+                            <td class="tc" style="width: 5%">
+                                <input type="text"
+                                       pattern="[0-9]{2}"
+                                       name="ord[]"
+                                       min="0"
+                                       placeholder="請輸入數字"
+                                       style="width: 100%"
+                                       onchange="changorder($(this).val(),{{$value->cate_id}})" ;
+                                >
+                            <td class="tc" style="width: 5%" name="cate_id[]">{{$value->cate_id}}</td>
                             <td>
                                 <a href="#">{{$value->_cate_name}}</a>
                             </td>
@@ -72,6 +78,24 @@
                             </td>
                         </tr>
                     @endforeach
+                    {{--<!-- 怎麼把值傳到JS -->--}}
+                    {{--@foreach($data as $value)--}}
+                    {{--<tr>--}}
+                    {{--<td class="tc" style="width: 5%">--}}
+                    {{--<input type="number" name="ord[]"  min="0" value="0" style="width: 100%">--}}
+                    {{--<td class="tc" style="width: 5%" name="cate_id[]">{{$value->cate_id}}</td>--}}
+                    {{--<td>--}}
+                    {{--<a href="#">{{$value->_cate_name}}</a>--}}
+                    {{--</td>--}}
+                    {{--<td>{{$value['cate_title']}}</td>--}}
+                    {{--<td>{{$value->cate_view}}</td>--}}
+                    {{--<td>--}}
+                    {{--<a href="#">修改</a>--}}
+                    {{--<a href="#">刪除</a>--}}
+                    {{--</td>--}}
+                    {{--</tr>--}}
+                    {{--@endforeach--}}
+                    {{--<!-- 怎麼把值傳到JS -->--}}
                 </table>
 
 
@@ -106,6 +130,47 @@
         </div>
     </form>
     <!--搜索結果頁面 列表 結束-->
+    {{--第三方JS layer http://layer.layui.com--}}
+    <script>
+        function changorder(cate_order, cate_id) {
+            $.post(
+                '{{url('admin/changorder')}}',
+                {
+                    'cate_order': cate_order,
+                    'cate_id': cate_id,
+                    '_token': '{{csrf_token()}}'
+                },
+                function (data) {
+                    if (data.status == 0) {
+                        layer.msg(data.message, {icon: 6});
+                        {{--第三方JS layer http://layer.layui.com--}}
+                        window.location.reload("{{url('admin/category')}}");// 網頁更新
 
+                    } else {
+                        layer.msg(data.message, {icon: 5});
+                        {{--第三方JS layer http://layer.layui.com--}}
 
+                    }
+
+                }
+            );
+        }
+    </script>
+    {{--<script>--}}
+
+    {{--$(document).ready(function () {--}}
+    {{--$("input[name|='ord[]']").keyup(function () {--}}
+    {{--$.post(--}}
+    {{--'{{url('admin/changorder')}}',--}}
+    {{--{--}}
+    {{--'changorder':$(this).val(),--}}
+    {{--'cate_id':$("[name|'cate_id[]']").val(),--}}
+    {{--'_token':'{{csrf_token()}}'--}}
+    {{--},--}}
+    {{--function (data) {--}}
+    {{--}--}}
+    {{--);--}}
+    {{--});--}}
+    {{--});--}}
+    {{--</script>--}}
 @endsection

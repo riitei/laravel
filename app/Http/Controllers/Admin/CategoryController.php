@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Model\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+//----資源路由 開始
+
 // php artisan route:list
 // |Domain | Method     | URI                             | Name             | Action                                                                 | Middleware           |
 // |       | POST       | admin/category                  | category.store   | App\Http\Controllers\admin\CategoryController@store                    | web,admin_login      |
@@ -64,4 +67,30 @@ class CategoryController extends Controller
     {
 
     }
+
+    //----資源路由 結束
+
+    public function changorder(Request $request)
+    {
+        //$request->input('changorder');
+        $category_result = Category::where('cate_id', $request->input('cate_id'))
+            ->update(
+                ['cate_order' => $request->input('cate_order')
+                ]
+            );
+
+        if ($category_result) {
+            $data = [
+                'status' => 0,
+                'message' => '分類排序更新_成功'
+            ];
+        } else {
+            $data = [
+                'status' => 1,
+                'message' => '分類排序更新_失敗'
+            ];
+        }
+        return $data;
+    }
+
 }

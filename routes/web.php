@@ -42,7 +42,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['web
 //-----
 });
 Route::resource('admin/category', 'Admin\CategoryController');
-
+Route::any('admin/changorder', 'Admin\CategoryController@changorder');
 Route::any('test', 'TestController@testDB');
 
 
