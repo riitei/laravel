@@ -58,14 +58,12 @@ class CategoryController extends Controller
                 // 又或者一个 PHP 数组。
 
             }
-            dd($request->all());
         }
     }
-
+//-------------------------------------------------------------------------------------
     // get admin/category 全部分類列表
     public function index()
     {
-
 //        $data = new Category();
 //        $data = $data->tree();
         $data = (new Category)->tree();
@@ -73,40 +71,50 @@ class CategoryController extends Controller
 //        $data = Category::tree();
         return view('admin.category.index')->with('data', $data);
     }
-
+//-------------------------------------------------------------------------------------
     // get admin/category/create 添加分類
     public function create()
     {
         $cate_pid = Category::where('cate_pid', 0)->orderBy('cate_id', 'asc')->get();
         return view('admin.category.add', compact('cate_pid'));
     }
-
+//-------------------------------------------------------------------------------------
     // DELETE admin/category/{category}  {參數} 刪除單個分類
     public function destroy()
     {
 
     }
-
+//-------------------------------------------------------------------------------------
     // put admin/category/{category} 更新分類
-    public function update()
+    public function update(Request $request, $cate_id)
     {
 
+        $result = Category::where('cate_id', $cate_id)
+            ->update($request->except('_token', '_method'));// 可以直接給 array
+        //
+        if ($result) {
+            return redirect('admin/category');
+        } else {
+            return back()->with('errors', '分類資料更新失敗');
+        }
     }
-
+//-------------------------------------------------------------------------------------
     // get admin/category/{category} 顯示單個分類訊息
     public function show()
     {
 
     }
-
+//-------------------------------------------------------------------------------------
     // get admin/category/{category}/edit 編輯分類
-    public function edit()
+    public function edit($cate_id)
     {
-
+        $category = Category::find($cate_id);
+        $data = Category::where('cate_pid', 0)->get();// 頂級分類
+        return view('admin.category.edit', compact('category', 'data'));
     }
-
+//-------------------------------------------------------------------------------------
     //----資源路由 結束
-
+//-------------------------------------------------------------------------------------
     public function changorder(Request $request)
     {
         //$request->input('changorder');
