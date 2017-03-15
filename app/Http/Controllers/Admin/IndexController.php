@@ -21,7 +21,7 @@ class IndexController extends CommonController
     // 更改超級管理員密碼 使用框架 驗證規則
     public function password(Request $request)
     {
-        if ($request->all()) {
+        if ($data = $request->except('_token')) {
             // 驗證規則
             // http://laravelacademy.org/post/6768.html
             // confirmed
@@ -35,7 +35,7 @@ class IndexController extends CommonController
                 'new_password.min' => '新密碼大於2！',
                 'new_password.confirmed' => '新密碼和確認密碼不一致！',
             ];
-            $validator = \Validator::make($request->all(), $rules, $message);// 輸入值,驗證規則,自訂錯誤訊息
+            $validator = \Validator::make($data, $rules, $message);// 輸入值,驗證規則,自訂錯誤訊息
             if ($validator->passes()) {
 //                echo '驗證 成功';
                 $user = User::select('user_password')->where('user_name', 'admin')->first();

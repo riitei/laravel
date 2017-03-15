@@ -24,7 +24,7 @@ class LoginController extends CommonController
 {
     public function login(Request $request)
     {
-        if ($request->all()) {
+        if ($request->except('_token')) {
 //            echo '1';
             // $input = Input::all();
             // $input['user_name'];
