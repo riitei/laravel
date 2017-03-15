@@ -8,7 +8,17 @@ class Category extends Model
 {
     protected $table = 'category';
     protected $primaryKey = 'cate_id';
+    //  http://laravelacademy.org/post/6979.html
+    protected $guarded = [];
+    /* $fillable 就像是可以被赋值属性的“白名单”，还可以选择使用 $guarded。
+     ＊ $guarded 属性包含你不想被赋值的属性数组。所以不被包含在其中的属性都是可以被赋值的，
+     ＊ 因此，$guarded 功能就像“黑名单”。
+     ＊ 当然，这两个属性你只能同时使用其中一个——而不能一起使用，
+     ＊ 因为它们是互斥的。下面的例子中，除了 price 之外的所有属性都是可以赋值的：
+     */
 
+
+//排除新增
 
     public function tree()
     {
