@@ -20,10 +20,10 @@ class CategoryController extends Controller
 // |       | GET|HEAD   | admin/category/{category}       | category.show    | App\Http\Controllers\admin\CategoryController@show                     | web,admin_login      |
 // |       | GET|HEAD   | admin/category/{category}/edit  | category.edit    | App\Http\Controllers\admin\CategoryController@edit                     | web,admin_login      |
 //-----
-    // post admin/category
-    public function store()
+    // post admin/category 添加分類提交
+    public function store(Request $request)
     {
-
+        dd($request->all());
     }
 
     // get admin/category 全部分類列表
@@ -41,7 +41,8 @@ class CategoryController extends Controller
     // get admin/category/create 添加分類
     public function create()
     {
-
+        $cate_pid = Category::where('cate_pid', 0)->orderBy('cate_id', 'asc')->get();
+        return view('admin.category.add', compact('cate_pid'));
     }
 
     // DELETE admin/category/{category}  {參數} 刪除單個分類

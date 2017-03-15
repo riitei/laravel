@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="style/css/ch-ui.admin.css">
-    <link rel="stylesheet" href="style/font/css/font-awesome.min.css">
-</head>
-<body>
+@extends('layouts.admin')
+@section('admin-content')
 <!--面包屑导航 开始-->
 <div class="crumb_warp">
-    <!--<i class="fa fa-bell"></i> 欢迎使用登陆网站后台，建站的首选工具。-->
-    <i class="fa fa-home"></i> <a href="#">首页</a> &raquo; <a href="#">商品管理</a> &raquo; 添加商品
+    <!--<i class="fa fa-bell"></i> 歡迎使用登陸網站後台，建站的首選工具。-->
+    <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首頁</a> &raquo; 添加文章分類
 </div>
 <!--面包屑导航 结束-->
 
-<!--结果集标题与导航组件 开始-->
+<!--結果集標題與導航組件 開始-->
 <div class="result_wrap">
     <div class="result_title">
         <h3>快捷操作</h3>
@@ -26,7 +20,7 @@
         </div>
     </div>
 </div>
-<!--结果集标题与导航组件 结束-->
+<!--結果集標題與導航組件 結束-->
 
 <div class="result_wrap">
     <form action="#" method="post">
@@ -36,7 +30,7 @@
                 <th width="120"><i class="require">*</i>分类：</th>
                 <td>
                     <select name="">
-                        <option value="">==请选择==</option>
+                        <option value="">==請選擇==</option>
                         <option value="19">精品界面</option>
                         <option value="20">推荐界面</option>
                     </select>
@@ -106,5 +100,4 @@
     </form>
 </div>
 
-</body>
-</html>
+@endsection
