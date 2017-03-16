@@ -69,7 +69,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
 }
 
 input[type='text'], input[type='password'] {
-    width: 350;
+    width: 350px;
     margin-right: 5px;
     padding: 6px 5px;
     line-height: 12px;
@@ -225,7 +225,7 @@ input[type='button'].back:hover {
 }
 
 .login_box .form ul li input[type='submit'] {
-    font-family: "微软雅黑";
+    font-family: "微軟雅黑";
     width: 240px;
     height: 33px;
     border-radius: 3px;

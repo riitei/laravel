@@ -32,12 +32,14 @@
     <!--搜索結果頁面 列表 開始-->
     <form action="#" method="post">
         <div class="result_wrap">
+            <div class="result_title">
+                <h3>分類管理</h3>
+            </div>
             <!--快捷導航 開始-->
             <div class="result_content">
                 <div class="short_wrap">
-                    <a href="{{url('admin/category/create')}}"><i class="fa fa-plus"></i>新增文章</a>
-                    <a href="#"><i class="fa fa-recycle"></i>批量删除</a>
-                    <a href="#"><i class="fa fa-refresh"></i>更新排序</a>
+                    <a href="{{url('admin/category/create')}}"><i class="fa fa-plus"></i>新增分類</a>
+                    <a href="{{url('admin/category')}}"><i class="fa fa-recycle"></i>全部分類</a>
                 </div>
             </div>
             <!--快捷導航 結束-->
@@ -74,7 +76,10 @@
                             <td>{{$value->cate_view}}</td>
                             <td>
                                 <a href="{{url('admin/category/'.$value->cate_id.'/edit')}}">修改</a>
-                                <a href="#">刪除</a>
+                                <a href="javascript:" onclick="delCate({{$value->cate_id}})">刪除</a>
+                                {{--javascript:是表示在触发<a>默认动作时,执行一段JavaScript代码,
+                                而 javascript:; 表示什么都不执行,这样点击<a>时就没有任何反应.--}}
+
                             </td>
                         </tr>
                     @endforeach
@@ -97,41 +102,13 @@
                     {{--@endforeach--}}
                     {{--<!-- 怎麼把值傳到JS -->--}}
                 </table>
-
-
-                <div class="page_nav">
-                    <div>
-                        <a class="first" href="/wysls/index.php/Admin/Tag/index/p/1.html">第一頁</a>
-                        <a class="prev" href="/wysls/index.php/Admin/Tag/index/p/7.html">上一頁</a>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/6.html">6</a>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/7.html">7</a>
-                        <span class="current">8</span>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/9.html">9</a>
-                        <a class="num" href="/wysls/index.php/Admin/Tag/index/p/10.html">10</a>
-                        <a class="next" href="/wysls/index.php/Admin/Tag/index/p/9.html">下一頁</a>
-                        <a class="end" href="/wysls/index.php/Admin/Tag/index/p/11.html">最後一頁</a>
-                        <span class="rows">11 條記錄</span>
-                    </div>
-                </div>
-
-
-                <div class="page_list">
-                    <ul>
-                        <li class="disabled"><a href="#">&laquo;</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                    </ul>
-                </div>
             </div>
         </div>
     </form>
     <!--搜索結果頁面 列表 結束-->
     {{--第三方JS layer http://layer.layui.com--}}
     <script>
+        // 更新
         function changorder(cate_order, cate_id) {
             $.post(
                 '{{url('admin/changorder')}}',
@@ -154,6 +131,42 @@
 
                 }
             );
+        }
+        // 刪除 http://laravelacademy.org/post/6732.html
+        {{--
+        HTML 表单不支持 PUT、PATCH 或者 DELETE 请求方法，
+        因此，当定义 PUT、PATCH 或 DELETE 路由时，
+        需要添加一个隐藏的 _method 字段到表单中，其值被用作该表单的 HTTP 请求方法：
+        --}}
+
+        {{--<form action="/foo/bar" method="POST">--}}
+        {{--<input type="hidden" name="_method" value="PUT">--}}
+        {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
+        {{--</form>--}}
+        {{--还可以使用辅助函数 method_field 来实现这一目的：--}}
+
+        {{--{{ method_field('PUT') }}--}}
+
+        function delCate(cate_id) {
+            layer.confirm('您確定要刪除這個分類嗎？', {
+                btn: ['確定', '取消'] //按钮
+            }, function () {
+                // DELETE admin/category/{category}  {參數} 刪除單個分類
+
+                $.post("{{url('admin/category/')}}/" + cate_id, {
+                    '_method': 'delete',
+                    '_token': "{{csrf_token()}}"
+                }, function (data) {
+                    if (data.status == 0) {
+                        // location.href = location.href;
+                        window.location.reload("{{url('admin/category')}}");// 網頁更新
+                        layer.msg(data.msg, {icon: 6});
+                    } else {
+                        layer.msg(data.msg, {icon: 5});
+                    }
+                });
+//            layer.msg('的确很重要', {icon: 1});
+            });
         }
     </script>
     {{--<script>--}}

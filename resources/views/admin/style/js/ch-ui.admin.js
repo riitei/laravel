@@ -1,30 +1,25 @@
-/* 
- * @Author: ChenHua <276004561@qq.com>
- * @Date:   2015-09-14 21:11:36
- * @Last Modified by:   ChenHua
- * @Last Modified time: 2015-11-21 16:01:10
- */
-
-//静止使用框架引用页面
-// if(top != self){  
-//     top.location.href=self.location.href;
+//靜止使用框架引用頁面
+// if(top != self){
+// top.location.href=self.location.href;
 // }
 
-//左侧点击事件
+//左側點擊事件
 $(function () {
     $('.sub_menu').find('li').click(function () {
         $(this).parents('.menu_box').find('li').removeClass('on');
         $(this).addClass('on');
     });
 });
-//左侧点击弹开子菜单
+
+//左側點擊彈開子菜單
 $(function () {
     $('.menu_box').find('ul').find('li').eq(0).find('.sub_menu').show();
     $('.menu_box').find('ul').find('li').find('h3').click(function () {
         $(this).parent('li').find('.sub_menu').slideToggle();
     });
 });
-//tab面板切换
+
+//tab面板切換
 $(function () {
     $('.tab_content').eq(0).show();
     $('.tab_title li').click(function () {
@@ -34,19 +29,19 @@ $(function () {
     });
 });
 
-//列表页点击全选按钮
+//列表頁點擊全選按鈕
 $(function () {
     $('.list_tab').find('tr').find('[type=checkbox]').click(function () {
         $('.list_tab').find('td').find('[type=checkbox]').prop('checked', $(this).prop('checked'));
     });
 });
 
-//删除图片列表
+//刪除圖片列表
 function del_pic(obj) {
     $(obj).parents('li').remove();
 }
 
-//添加图片上传框
+//添加圖片上傳框
 function pic_plus(obj) {
     var li = $(obj).parents('li').eq(0);
     var input = li.clone();
@@ -55,10 +50,7 @@ function pic_plus(obj) {
     input.insertAfter(li);
 }
 
-//删除图片上传框
+//刪除圖片上傳框
 function pic_minus(obj) {
     $(obj).parents('li').remove();
 }
-
-
-

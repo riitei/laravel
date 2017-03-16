@@ -79,13 +79,30 @@ class CategoryController extends Controller
         return view('admin.category.add', compact('cate_pid'));
     }
 //-------------------------------------------------------------------------------------
-    // DELETE admin/category/{category}  {參數} 刪除單個分類
-    public function destroy()
+    // DELETE admin/category/{category}  {參數} 刪除單個分類 {category}此參數無法透過 Request $request
+    // 因此 admin/category/11111 把參數帶入 html name='cate_id' value=11111
+    public function destroy(Request $request, $cate_id)
     {
+        $result = Category::where('cate_id', $cate_id)->delete();
+        Category::where('cate_pid', $cate_id)->update(['cate_pid' => 0]); // 多筆更新
+        //
+        if ($result) {
+            $data = [
+                'status' => 0,
+                'msg' => '分類刪除_成功'
+            ];
+        } else {
+            $data = [
+                'status' => 1,
+                'msg' => '分類刪除_失敗'
+            ];
 
+        }
+        return $data;
     }
 //-------------------------------------------------------------------------------------
-    // put admin/category/{category} 更新分類
+    // put admin/category/{category} 更新分類 ,{category}此參數無法透過 Request $request
+    // 因此 admin/category/11111 把參數帶入 html name='cate_id' value=11111
     public function update(Request $request, $cate_id)
     {
 
