@@ -43,6 +43,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['web
 });
 Route::resource('admin/category', 'Admin\CategoryController');
 Route::any('admin/changorder', 'Admin\CategoryController@changorder');
+//
+Route::resource('admin/article', 'Admin\ArticleController');
+//
 Route::any('test', 'TestController@testDB');
 
 
@@ -50,7 +53,7 @@ Route::any('test', 'TestController@testDB');
 //**** 範例程式
 //
 //**** 路由資源
-Route::resource('admin/article', 'AdminRouteGroup\ArticleController');
+Route::resource('articles', 'AdminRouteGroup\ArticlesController');
 // php artisan route:list
 // http://laravel.riitei.com/admin/article
 
@@ -92,7 +95,7 @@ Route::group(['prefix' => 'admin_middleware', 'namespace' => 'AdminMiddleware', 
 //-----
 
 //**** 路由資源
-Route::resource('admin/article', 'AdminRouteGroup\ArticleController');
+Route::resource('admin/articles', 'AdminRouteGroup\ArticlesController');
 // php artisan route:list
 // http://laravel.riitei.com/admin/article
 

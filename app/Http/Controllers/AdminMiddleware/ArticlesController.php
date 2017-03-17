@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\AdminRouteGroup;
+namespace App\Http\Controllers\AdminMiddleware;
 
 use App\Http\Controllers\Controller;
 
-class ArticleController extends Controller
+class ArticlesController extends Controller
 {
     //
     public function index()

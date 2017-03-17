@@ -10,17 +10,18 @@ use Illuminate\Support\Facades\Validator;
 class CategoryController extends Controller
 {
 //----資源路由 開始
-
+//
 // php artisan route:list
-// |Domain | Method     | URI                             | Name             | Action                                                                 | Middleware           |
-// |       | POST       | admin/category                  | category.store   | App\Http\Controllers\admin\CategoryController@store                    | web,admin_login      |
-// |       | GET|HEAD   | admin/category                  | category.index   | App\Http\Controllers\admin\CategoryController@index                    | web,admin_login      |
-// |       | GET|HEAD   | admin/category/create           | category.create  | App\Http\Controllers\admin\CategoryController@create                   | web,admin_login      |
-// |       | DELETE     | admin/category/{category}       | category.destroy | App\Http\Controllers\admin\CategoryController@destroy                  | web,admin_login      |
-// |       | PUT|PATCH  | admin/category/{category}       | category.update  | App\Http\Controllers\admin\CategoryController@update                   | web,admin_login      |
-// |       | GET|HEAD   | admin/category/{category}       | category.show    | App\Http\Controllers\admin\CategoryController@show                     | web,admin_login      |
-// |       | GET|HEAD   | admin/category/{category}/edit  | category.edit    | App\Http\Controllers\admin\CategoryController@edit                     | web,admin_login      |
+// |Domain | Method     | URI                             | Name             | Action                                                | Middleware           |
+// |       | POST       | admin/category                  | category.store   | App\Http\Controllers\admin\CategoryController@store   | web,admin_login      |
+// |       | GET|HEAD   | admin/category                  | category.index   | App\Http\Controllers\admin\CategoryController@index   | web,admin_login      |
+// |       | GET|HEAD   | admin/category/create           | category.create  | App\Http\Controllers\admin\CategoryController@create  | web,admin_login      |
+// |       | DELETE     | admin/category/{category}       | category.destroy | App\Http\Controllers\admin\CategoryController@destroy | web,admin_login      |
+// |       | PUT|PATCH  | admin/category/{category}       | category.update  | App\Http\Controllers\admin\CategoryController@update  | web,admin_login      |
+// |       | GET|HEAD   | admin/category/{category}       | category.show    | App\Http\Controllers\admin\CategoryController@show    | web,admin_login      |
+// |       | GET|HEAD   | admin/category/{category}/edit  | category.edit    | App\Http\Controllers\admin\CategoryController@edit    | web,admin_login      |
 //-----
+//
     // post admin/category 添加分類提交
     public function store(Request $request)
     {
