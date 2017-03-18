@@ -12,7 +12,8 @@
 |
 */
 //
-Route::get('/', 'TestController@crypt');
+Route::any('/', 'TestController@index');
+Route::any('upload','TestController@upload');
 //-----
 /*
  * php artisan make:middleware AdminLogin
@@ -28,6 +29,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['web
     Route::any('info', 'IndexController@info');
     Route::any('pass', 'IndexController@password');
     Route::any('quit', 'LoginController@quit');
+/*
     //-----
     // 使用資源路由
 // php artisan route:list
@@ -40,7 +42,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['web
 // |        | GET|HEAD   | admin/category/{category}       | category.show    | App\Http\Controllers\admin\CategoryController@show                     | web,admin_login      |
 // |        | GET|HEAD   | admin/category/{category}/edit  | category.edit    | App\Http\Controllers\admin\CategoryController@edit                     | web,admin_login      |
 //-----
+*/
 });
+
 Route::resource('admin/category', 'Admin\CategoryController');
 Route::any('admin/changorder', 'Admin\CategoryController@changorder');
 //
@@ -48,7 +52,7 @@ Route::resource('admin/article', 'Admin\ArticleController');
 //
 Route::any('test', 'TestController@testDB');
 
-
+Route::any('admin/upload','Admin\CommonController@uploadPhotoFile');
 //-----
 //**** 範例程式
 //
