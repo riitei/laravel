@@ -98,7 +98,15 @@ class ArticleController extends CommonController
     // 因此 admin/article/11111 把參數帶入 html name='art_id' value=11111
     public function update(Request $request, $art_id)
     {
-
+        $article = $request->except('_method', '_token');
+        $result = Article::where('art_id', $art_id)
+            ->update($article);// 可以直接給 array
+        //
+        if ($result) {
+            return redirect('admin/article');
+        } else {
+            return back()->with('errors', '文章更新失敗');
+        }
     }
 
 //-------------------------------------------------------------------------------------
@@ -110,9 +118,11 @@ class ArticleController extends CommonController
 
 //-------------------------------------------------------------------------------------
     // get admin/article/{article}/edit 編輯文章
-    public function edit($art_id)
+    public function edit(Request $request, $art_id)
     {
-
+        $category = (new Category())->tree();
+        $article = Article::find($art_id); //利用pk去找資料
+        return view('admin.article.edit', compact('category', 'article'));
     }
 
 //-------------------------------------------------------------------------------------

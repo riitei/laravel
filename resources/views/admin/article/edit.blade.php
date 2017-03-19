@@ -10,7 +10,7 @@
     <!--結果集標題與導航組件 開始-->
     <div class="result_wrap">
         <div class="result_title">
-            <h3>添加文章</h3>
+            <h3>編輯文章</h3>
             @if(count($errors)>0)
                 <div class="mark">
                     @if(is_object($errors))
@@ -33,7 +33,8 @@
     <!--結果集標題與導航組件 结束-->
 
     <div class="result_wrap">
-        <form action="{{url('admin/article')}}" method="post">
+        <form action="{{url('admin/article/'.$article->art_id)}}" method="post">
+            {{method_field('put')}}
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>
@@ -42,8 +43,12 @@
                     <td>
                         <select name="cate_id">
                             <option value="0">==頂級文章==</option>
-                            @foreach($article as $value)
-                                <option value="{{$value->cate_id}}">{{$value->_cate_name}}</option>
+                            @foreach($category as $value)
+                                <option value="{{$value->cate_id}}"
+                                        @if($article->cate_id ==$value->cate_id)
+                                        selected
+                                        @endif
+                                >{{$value->_cate_name}}</option>
                             @endforeach
                         </select>
                     </td>
@@ -52,19 +57,19 @@
                 <tr>
                     <th><i class="require">*</i>文章標題：</th>
                     <td>
-                        <input type="text" class="lg" name="art_title">
+                        <input type="text" class="lg" name="art_title" value="{{$article->art_title}}">
                     </td>
                 </tr>
                 <tr>
                     <th>編輯：</th>
                     <td>
-                        <input type="text" class="sm" name="art_edit">
+                        <input type="text" class="sm" name="art_edit" value="{{$article->art_edit}}">
                     </td>
                 </tr>
                 <tr>
                     <th>縮圖：</th>
                     <td>
-                        <input type="text" size="50" name="art_thumb">
+                        <input type="text" size="50" name="art_thumb" value="{{$article->art_thumb}}">
                         <input id="file_upload" name="file_upload" type="file" multiple="true">
                         <script src="{{asset('js/uploadify/jquery.uploadify.min.js')}}" type="text/javascript"></script>
                         <link rel="stylesheet" type="text/css" href="{{asset('js/uploadify/uploadify.css')}}">
@@ -80,9 +85,9 @@
                                     },
                                     'swf': "{{asset('js/uploadify/uploadify.swf')}}",
                                     'uploader': "{{url('admin/upload')}}",
-                                    'onUploadSuccess' : function(file, data, response) {
+                                    'onUploadSuccess': function (file, data, response) {
                                         $('input[name=art_thumb]').val(data);
-                                        $('#art_thumb_img').attr('src',data);
+                                        $('#art_thumb_img').attr('src', data);
                                     }
                                 });
                             });
@@ -109,19 +114,20 @@
                 <tr>
                     <th></th>
                     <td>
-                        <img src="" alt="" id="art_thumb_img" style="max-width: 350px; max-height:100px;">
+                        <img src="{{$article->art_thumb}}" id="art_thumb_img"
+                             style="max-width: 350px; max-height:100px;">
                     </td>
                 </tr>
                 <tr>
                     <th>關鍵詞：</th>
                     <td>
-                        <input type="text" class="lg" name="art_tag"></input>
+                        <input type="text" class="lg" name="art_tag" value="{{$article->art_tag}}">
                     </td>
                 </tr>
                 <tr>
                     <th>描述：</th>
                     <td>
-                        <textarea name="art_description"></textarea>
+                        <textarea name="art_description">{{$article->art_description}}</textarea>
                     </td>
                 </tr>
 
@@ -140,11 +146,16 @@
                         </script>
                         <script
                                 type="text/javascript" charset="utf-8"
-                                src="{{asset('js/ueditor/lang/zh-cn/zh-tw.js')}}"></script>
+                                src="{{asset('js/ueditor/lang/zh-cn/zh-tw.js')}}">
+
+                        </script>
                         {{--版面 id 設定 name--}}
+                        {{-- {!!  !!} 將標籤顯示--}}
                         <script
                                 id="editor" name="art_content" type="text/plain"
                                 style=" width:860px;height:500px;">
+                            {!! $article->art_content !!}
+
                         </script>
                         {{--實作--}}
                         <script type="text/javascript">

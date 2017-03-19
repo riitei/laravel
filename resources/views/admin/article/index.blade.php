@@ -54,7 +54,7 @@
                             <td>{{$value->art_edit}}</td>
                             <td>{{$value->art_time}}</td>
                             <td>
-                                <a href="#">修改</a>
+                                <a href="{{url('admin/article/'.$value -> art_id.'/edit')}}">修改</a>
                                 <a href="#">刪除</a>
                             </td>
                         </tr>

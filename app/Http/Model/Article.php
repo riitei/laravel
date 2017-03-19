@@ -12,7 +12,7 @@ class Article extends Model
     protected $table = 'article';//art_create_date
     protected $primaryKey = 'art_id';
 // 如果你需要自定义用于存储时间戳的字段名称，可以在模型中设置 CREATED_AT 和 UPDATED_AT 常量：
-    protected $guarded = ['cate_pid'];
+    protected $guarded = [];
     /* $fillable 就像是可以被赋值属性的“白名单”，还可以选择使用 $guarded。
      ＊ $guarded 属性包含你不想被赋值的属性数组。所以不被包含在其中的属性都是可以被赋值的，
      ＊ 因此，$guarded 功能就像“黑名单”。
