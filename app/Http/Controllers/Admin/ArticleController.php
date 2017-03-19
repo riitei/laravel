@@ -90,7 +90,21 @@ class ArticleController extends CommonController
     // 因此 admin/article/11111 把參數帶入 html name='art_id' value=11111
     public function destroy(Request $request, $art_id)
     {
+        $result = Article::where('art_id', $art_id)->delete();
+        //
+        if ($result) {
+            $data = [
+                'status' => 0,
+                'msg' => '文章刪除_成功'
+            ];
+        } else {
+            $data = [
+                'status' => 1,
+                'msg' => '文章刪除_失敗'
+            ];
 
+        }
+        return $data;
     }
 
 //-------------------------------------------------------------------------------------
