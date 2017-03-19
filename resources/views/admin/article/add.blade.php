@@ -50,7 +50,7 @@
                 </tr>
 
                 <tr>
-                    <th>文章標題：</th>
+                    <th><i class="require">*</i>文章標題：</th>
                     <td>
                         <input type="text" class="lg" name="art_title">
                     </td>
@@ -83,7 +83,6 @@
                                     'onUploadSuccess' : function(file, data, response) {
                                         $('input[name=art_thumb]').val(data);
                                         $('#art_thumb_img').attr('src',data);
-                                        alert(data);
                                     }
                                 });
                             });
@@ -127,7 +126,7 @@
                 </tr>
 
                 <tr>
-                    <th>文章內容：</th>
+                    <th><i class="require">*</i>文章內容：</th>
                     <td>
                         {{--套件引用--}}
                         <script
@@ -145,7 +144,7 @@
                         {{--版面 id 設定 name--}}
                         <script
                                 id="editor" name="art_content" type="text/plain"
-                                style="width:860px;height:500px;">
+                                style=" width:860px;height:500px;">
                         </script>
                         {{--實作--}}
                         <script type="text/javascript">
