@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.15 on 2017-03-18.
+ * Generated for Laravel 5.4.15 on 2017-03-20.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11350,13 +11350,13 @@ namespace Illuminate\Support\Facades {
 namespace {
 
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Debug\Dumper;
-use Illuminate\Contracts\Support\Htmlable;
+    use Illuminate\Contracts\Support\Htmlable;
+    use Illuminate\Support\Arr;
+    use Illuminate\Support\Collection;
+    use Illuminate\Support\Debug\Dumper;
+    use Illuminate\Support\Str;
 
-if (! function_exists('append_config')) {
+    if (!function_exists('append_config')) {
     /**
      * Assign high numeric IDs to a config item to force appending.
      *
