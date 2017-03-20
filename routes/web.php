@@ -45,14 +45,17 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['web
 */
 });
 
-Route::resource('admin/category', 'Admin\CategoryController');
-Route::any('admin/changorder', 'Admin\CategoryController@changorder');
+Route::resource('admin/category', 'Admin\CategoryController'); // 分類文章 路由資源
+Route::resource('admin/article', 'Admin\ArticleController'); // 文章 路由資源
+Route::resource('admin/links', 'Admin\LinksController'); // 超連結 路由
+Route::any('admin/changorder', 'Admin\CategoryController@changorder');// 文章排序
+Route::any('admin/links/changorder', 'Admin\LinksController@changorder');// 超連結排序
+Route::any('admin/upload', 'Admin\CommonController@uploadPhotoFile');// 上傳檔案
 //
-Route::resource('admin/article', 'Admin\ArticleController');
 //
+
 Route::any('test', 'TestController@testDB');
 
-Route::any('admin/upload','Admin\CommonController@uploadPhotoFile');
 //-----
 //**** 範例程式
 //
