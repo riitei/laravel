@@ -3,14 +3,14 @@
     <!--面包屑导航 开始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 歡迎使用登陸網站後台，建站的首選工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首頁</a> &raquo; 編輯文章超連結
+        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首頁</a> &raquo; 自定義導航 管理
     </div>
     <!--面包屑导航 结束-->
 
     <!--結果集標題與導航組件 開始-->
     <div class="result_wrap">
         <div class="result_title">
-            <h3>超連結管理</h3>
+            <h3>添加 超連結</h3>
             @if(count($errors)>0)
                 <div class="mark" style="color: red">
                     @if(is_object($errors))
@@ -25,58 +25,42 @@
         </div>
         <div class="result_content">
             <div class="short_wrap">
-                <a href="{{url('admin/links/create')}}"><i class="fa fa-plus"></i>新增超連結</a>
-                <a href="{{url('admin/links')}}"><i class="fa fa-recycle"></i>全部超連結</a>
+                <a href="{{url('admin/navs/create')}}"><i class="fa fa-plus"></i>新增自定義導航</a>
+                <a href="{{url('admin/navs')}}"><i class="fa fa-recycle"></i>全部自定義導航</a>
             </div>
         </div>
     </div>
     <!--結果集標題與導航組件 結束-->
 
     <div class="result_wrap">
-        <form action="{{url('admin/links/'.$links->link_id)}}" method="post">
-            {{--6、表单方法伪造--}}
-            {{--HTML 表单不支持 PUT、PATCH 或者 DELETE 请求方法，
-            因此，当定义 PUT、PATCH 或 DELETE 路由时，需要添加一个隐藏的 _method 字段到表单中，
-            其值被用作该表单的 HTTP 请求方法：--}}
-
-            {{--<form action="/foo/bar" method="POST">--}}
-            {{--<input type="hidden" name="_method" value="PUT">--}}
-            {{--<input type="hidden" name="_token" value="{{ csrf_token() }}">--}}
-            {{--</form>--}}
-            {{--还可以使用辅助函数 method_field 来实现这一目的：--}}
-
-            {{--{{ method_field('PUT') }}--}}
-            {{----}}
-
-            {{method_field('put')}}
+        <form action="{{url('admin/navs')}}" method="post">
             {{csrf_field()}}
-
             <table class="add_tab">
                 <tbody>
                 <tr>
-                    <th><i class="require">*</i>超連結名稱：</th>
+                    <th><i class="require">*</i>自定義導航 中文名稱：</th>
                     <td>
-                        <input type="text" name="link_name" value="{{$links->link_name}}">
-                        <span><i class="fa fa-exclamation-circle yellow"></i>超連結名稱必須填寫</span>
+                        <input type="text" name="nav_name_tw">
+                        <span><i class="fa fa-exclamation-circle yellow"></i>自定義導航名稱必須填寫</span>
                     </td>
                 </tr>
                 <tr>
-                    <th>超連結標題：</th>
+                    <th>自定義導航 英文名稱：</th>
                     <td>
-                        <input type="text" class="lg" name="link_title" value="{{$links->link_title}}">
+                        <input type="text" class="lg" name="nav_name_en">
                         <p>標題可以寫30字</p>
                     </td>
                 </tr>
                 <tr>
                     <th><i class="require">*</i>URL：</th>
                     <td>
-                        <input name="link_url" value="{{$links->link_url}}">
+                        <input type="text" class="lg " name="nav_url" value="http://">
                     </td>
                 </tr>
                 <tr>
                     <th><i class="require">*</i>排序：</th>
                     <td>
-                        <input type="text" name="link_order" value="{{$links->link_order}}">
+                        <input type="text" name="nav_order" style="width: 50px" value="0">
                     </td>
                 </tr>
                 <tr>

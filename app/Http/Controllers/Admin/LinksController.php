@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Model\Links;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class LinksController extends Controller
 {
@@ -15,7 +16,7 @@ class LinksController extends Controller
 // |       | POST       | admin/links               | links.store   | App\Http\Controllers\admin\linksController@store   | web,admin_login      |
 // |       | GET|HEAD   | admin/links               | links.index   | App\Http\Controllers\admin\linksController@index   | web,admin_login      |
 // |       | GET|HEAD   | admin/links/create        | links.create  | App\Http\Controllers\admin\linksController@create  | web,admin_login      |
-// |       | DELETE     | admin/links/{links}       | links.destroy | App\Http\Controllers\admin\linksController@destroy | web,admin_login      |
+// |       | DELETE     | admin/links/{links}       | links.        | App\Http\Controllers\admin\linksController@destroy | web,admin_login      |
 // |       | PUT|PATCH  | admin/links/{links}       | links.update  | App\Http\Controllers\admin\linksController@update  | web,admin_login      |
 // |       | GET|HEAD   | admin/links/{links}       | links.show    | App\Http\Controllers\admin\linksController@show    | web,admin_login      |
 // |       | GET|HEAD   | admin/links/{links}/edit  | links.edit    | App\Http\Controllers\admin\linksController@edit    | web,admin_login      |
@@ -32,20 +33,20 @@ class LinksController extends Controller
 //            // confirmed
 //            // 验证字段必须有一个匹配字段 foo_confirmation，例如，如果验证字段是 password，必须输入一个与之匹配的password_confirmation 字段。
             $rules = [
-                'art_title' => 'required', // input name='art_title' 不為空
-                'art_content' => 'required', // input name='art_content' 不為空
+                'link_name' => 'required', // input name='link_title' 不為空
+                'link_url' => 'required', // input name='link_content' 不為空
 
             ];
             // 自定義錯誤訊息
             $message = [
-                'art_title.required' => '分類 超連結標題 必須填寫！',// 格式 html標籤(input name) . 規則(required) => 制定錯誤訊息
-                'art_content.required' => '分類 超連結內容 必須填寫！',// 格式 html標籤(input name) . 規則(required) => 制定錯誤訊息
+                'link_name.required' => '分類 超連結標題 必須填寫！',// 格式 html標籤(input name) . 規則(required) => 制定錯誤訊息
+                'link_url.required' => '分類 超連結內容 必須填寫！',// 格式 html標籤(input name) . 規則(required) => 制定錯誤訊息
 
             ];
             $validator = Validator::make($linksData, $rules, $message);// 輸入值,驗證規則,自訂錯誤訊息
             if ($validator->passes()) {
 //                echo '驗證 成功';
-                $result = links::create($linksData);
+                $result = Links::create($linksData);
                 if ($result) {
                     return redirect('admin/links');
                 } else {
@@ -68,7 +69,7 @@ class LinksController extends Controller
     // get admin/links 全部超連結列表
     public function index()
     {
-//        $links = links::orderBy('art_time', 'desc')->paginate(5);
+//        $links = Links::orderBy('link_time', 'desc')->paginate(5);
 //        // 分頁 paginate
 //        // http://laravelacademy.org/post/6960.html
 //        // dd($data->links());
@@ -80,17 +81,16 @@ class LinksController extends Controller
     // get admin/links/create 添加超連結
     public function create()
     {
-        $links = (new Category())->tree();
 
-        return view('admin.links.add', compact('links'));
+        return view('admin.links.add');
     }
 
 //-------------------------------------------------------------------------------------
     // DELETE admin/links/{links}  {參數} 刪除單個超連結 {links}此參數無法透過 Request $request
-    // 因此 admin/links/11111 把參數帶入 html name='art_id' value=11111
-    public function destroy(Request $request, $art_id)
+    // 因此 admin/links/11111 把參數帶入 html name='link_id' value=11111
+    public function destroy(Request $request, $link_id)
     {
-        $result = links::where('art_id', $art_id)->delete();
+        $result = Links::where('link_id', $link_id)->delete();
         //
         if ($result) {
             $data = [
@@ -109,11 +109,11 @@ class LinksController extends Controller
 
 //-------------------------------------------------------------------------------------
     // put admin/links/{links} 更新超連結 ,{links}此參數無法透過 Request $request
-    // 因此 admin/links/11111 把參數帶入 html name='art_id' value=11111
-    public function update(Request $request, $art_id)
+    // 因此 admin/links/11111 把參數帶入 html name='link_id' value=11111
+    public function update(Request $request, $link_id)
     {
         $links = $request->except('_method', '_token');
-        $result = links::where('art_id', $art_id)
+        $result = Links::where('link_id', $link_id)
             ->update($links);// 可以直接給 array
         //
         if ($result) {
@@ -132,11 +132,10 @@ class LinksController extends Controller
 
 //-------------------------------------------------------------------------------------
     // get admin/links/{links}/edit 編輯超連結
-    public function edit(Request $request, $art_id)
+    public function edit(Request $request, $link_id)
     {
-        $category = (new Category())->tree();
-        $links = links::find($art_id); //利用pk去找資料
-        return view('admin.links.edit', compact('category', 'links'));
+        $links = Links::find($link_id); //利用pk去找資料
+        return view('admin.links.edit', compact('links'));
     }
 
 //-------------------------------------------------------------------------------------

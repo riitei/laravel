@@ -47,9 +47,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['web
 
 Route::resource('admin/category', 'Admin\CategoryController'); // 分類文章 路由資源
 Route::resource('admin/article', 'Admin\ArticleController'); // 文章 路由資源
-Route::resource('admin/links', 'Admin\LinksController'); // 超連結 路由
-Route::any('admin/changorder', 'Admin\CategoryController@changorder');// 文章排序
-Route::any('admin/links/changorder', 'Admin\LinksController@changorder');// 超連結排序
+Route::resource('admin/links', 'Admin\LinksController'); // 超連結 路由資源
+Route::resource('admin/navs', 'Admin\NavsController'); // 自定義導航 路由資源
+Route::any('admin/changorder', 'Admin\CategoryController@changorder');// 文章 排序
+Route::any('admin/links/changorder', 'Admin\LinksController@changorder');// 超連結 排序
+Route::any('admin/navs/changorder', 'Admin\NavsController@changorder');// 自定義導航 排序
 Route::any('admin/upload', 'Admin\CommonController@uploadPhotoFile');// 上傳檔案
 //
 //

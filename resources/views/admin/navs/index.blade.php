@@ -3,7 +3,7 @@
     <!--麵包屑導航 開始-->
     <div class="crumb_warp">
         <!--<i class="fa fa-bell"></i> 歡迎使用登陸網站後台，建站的首選工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首頁</a> &raquo; 超連結 管理
+        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首頁</a> &raquo; 自定義導航 管理
     </div>
     <!--麵包屑導航 結束-->
 
@@ -12,7 +12,7 @@
     {{--<form action="" method="post">--}}
     {{--<table class="search_tab">--}}
     {{--<tr>--}}
-    {{--<th width="120">選擇超連結:</th>--}}
+    {{--<th width="120">選擇自定義導航:</th>--}}
     {{--<td>--}}
     {{--<select onchange="location.href=this.value;">--}}
     {{--<option value="">全部</option>--}}
@@ -33,13 +33,13 @@
     <form action="#" method="post">
         <div class="result_wrap">
             <div class="result_title">
-                <h3>超連結列表</h3>
+                <h3>自定義導航列表</h3>
             </div>
             <!--快捷導航 開始-->
             <div class="result_content">
                 <div class="short_wrap">
-                    <a href="{{url('admin/links/create')}}"><i class="fa fa-plus"></i>新增超連結</a>
-                    <a href="{{url('admin/links')}}"><i class="fa fa-recycle"></i>全部超連結</a>
+                    <a href="{{url('admin/navs/create')}}"><i class="fa fa-plus"></i>新增自定義導航</a>
+                    <a href="{{url('admin/navs')}}"><i class="fa fa-recycle"></i>全部自定義導航</a>
                 </div>
             </div>
             <!--快捷導航 結束-->
@@ -51,13 +51,13 @@
                     <tr>
                         <th class="tc" style="width: 8%">排序</th>
                         <th class="tc" style="width: 10%">ID</th>
-                        <th>超連結名稱</th>
-                        <th>超連結標題</th>
-                        <th>超連結地址</th>
+                        <th>自定義導航 中文名稱</th>
+                        <th>自定義導航 英文名稱</th>
+                        <th>自定義導航 URL地址</th>
 
                         <th>操作</th>
                     </tr>
-                    @foreach($links as $value)
+                    @foreach($navs as $value)
                         <tr>
                             <td class="tc" style="width: 5%">
                                 <input type="text"
@@ -66,18 +66,18 @@
                                        min="0"
                                        {{--placeholder="請輸入數字"--}}
                                        style="width: 50%"
-                                       onchange="changorder($(this).val(),{{$value->link_id}})"
-                                       value="{{$value->link_order}}"
+                                       onchange="changorder($(this).val(),{{$value->nav_id}})"
+                                       value="{{$value->nav_order}}"
                                 >
-                            <td class="tc" style="width: 5%" name="link_id[]">{{$value->link_id}}</td>
+                            <td class="tc" style="width: 5%" name="nav_id[]">{{$value->nav_id}}</td>
                             <td>
-                                <a href="#">{{$value->link_name}}</a>
+                                <a href="#">{{$value->nav_name_tw}}</a>
                             </td>
-                            <td>{{$value->link_title}}</td>
-                            <td>{{$value->link_url}}</td>
+                            <td>{{$value->nav_name_en}}</td>
+                            <td>{{$value->nav_url}}</td>
                             <td>
-                                <a href="{{url('admin/links/'.$value->link_id.'/edit')}}">修改</a>
-                                <a href="javascript:" onclick="dellink({{$value->link_id}})">刪除</a>
+                                <a href="{{url('admin/navs/'.$value->nav_id.'/edit')}}">修改</a>
+                                <a href="javascript:" onclick="dellink({{$value->nav_id}})">刪除</a>
                                 {{--javascript:是表示在触发<a>默认动作时,执行一段JavaScript代码,
                                 而 javascript:; 表示什么都不执行,这样点击<a>时就没有任何反应.--}}
 
@@ -89,12 +89,12 @@
                     {{--<tr>--}}
                     {{--<td class="tc" style="width: 5%">--}}
                     {{--<input type="number" name="ord[]"  min="0" value="0" style="width: 100%">--}}
-                    {{--<td class="tc" style="width: 5%" name="link_id[]">{{$value->link_id}}</td>--}}
+                    {{--<td class="tc" style="width: 5%" name="nav_id[]">{{$value->nav_id}}</td>--}}
                     {{--<td>--}}
-                    {{--<a href="#">{{$value->_link_name}}</a>--}}
+                    {{--<a href="#">{{$value->_nav_name}}</a>--}}
                     {{--</td>--}}
-                    {{--<td>{{$value['link_title']}}</td>--}}
-                    {{--<td>{{$value->link_view}}</td>--}}
+                    {{--<td>{{$value['nav_title']}}</td>--}}
+                    {{--<td>{{$value->nav_view}}</td>--}}
                     {{--<td>--}}
                     {{--<a href="#">修改</a>--}}
                     {{--<a href="#">刪除</a>--}}
@@ -110,12 +110,12 @@
     {{--第三方JS layer http://layer.layui.com--}}
     <script>
         // 更新
-        function changorder(link_order, link_id) {
+        function changorder(nav_order, nav_id) {
             $.post(
-                '{{url('admin/links/changorder')}}',
+                '{{url('admin/navs/changorder')}}',
                 {
-                    'link_order': link_order,
-                    'link_id': link_id,
+                    'nav_order': nav_order,
+                    'nav_id': nav_id,
                     '_token': '{{csrf_token()}}'
                 },
                 function (data) {
@@ -153,19 +153,19 @@
 
         {{--{{ method_field('PUT') }}--}}
 
-        function dellink(link_id) {
-            layer.confirm('您確定要刪除這個超連結嗎？', {
+        function dellink(nav_id) {
+            layer.confirm('您確定要刪除這個自定義導航嗎？', {
                 btn: ['確定', '取消'] //按钮
             }, function () {
-                // DELETE admin/links/{links}  {參數} 刪除單個超連結
+                // DELETE admin/navs/{navs}  {參數} 刪除單個自定義導航
 
-                $.post("{{url('admin/links/')}}" + '/' + link_id, {
+                $.post("{{url('admin/navs/')}}" + '/' + nav_id, {
                     '_method': 'delete',  // 資源路由 執行 刪除必須添加
                     '_token': "{{csrf_token()}}"
                 }, function (data) {
                     if (data.status == 0) {
                         // location.href = location.href;
-                        window.location.reload("{{url('admin/links')}}");// 網頁更新
+                        window.location.reload("{{url('admin/navs')}}");// 網頁更新
                         layer.msg(data.msg, {icon: 6});
                     } else {
                         layer.msg(data.msg, {icon: 5});
@@ -183,7 +183,7 @@
     {{--'{{url('admin/changorder')}}',--}}
     {{--{--}}
     {{--'changorder':$(this).val(),--}}
-    {{--'link_id':$("[name|'link_id[]']").val(),--}}
+    {{--'nav_id':$("[name|'nav_id[]']").val(),--}}
     {{--'_token':'{{csrf_token()}}'--}}
     {{--},--}}
     {{--function (data) {--}}

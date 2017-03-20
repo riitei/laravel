@@ -33,11 +33,18 @@
                     </li>
                     <li><a href="{{url('admin/article')}}" target="main"><i class="fa fa-fw fa-list-ul"></i>文章列表</a>
                     </li>
+                    <li><a href="{{url('admin/links/create')}}" target="main"><i class="fa fa-fw fa-plus-square"></i>添加超連結</a>
+
                 </ul>
             </li>
             <li>
                 <h3><i class="fa fa-fw fa-cog"></i>系統設置</h3>
-                <ul class="sub_menu">
+                <ul class="sub_menu" style="display: block">
+                    {{--使用 awesome.min.css 套件--}}
+                    </li>
+                    <li><a href="{{url('admin/navs')}}" target="main"><i class="fa fa-fw fa-navicon"></i>自定義導航列表</a>
+                    </li>
+
                     <li><a href="#" target="main"><i class="fa fa-fw fa-cubes"></i>網站配置</a></li>
                     <li><a href="#" target="main"><i class="fa fa-fw fa-database"></i>備份還原</a></li>
                 </ul>
