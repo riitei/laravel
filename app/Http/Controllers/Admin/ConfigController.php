@@ -69,11 +69,40 @@ class ConfigController extends CommonController
     // get admin/conf 全部設定列表
     public function index()
     {
-//        $conf = Config::orderBy('conf_time', 'desc')->paginate(5);
-//        // 分頁 paginate
-//        // http://laravelacademy.org/post/6960.html
-//        // dd($data->conf());
+        //  echo $key . "_" .
         $config = Config::orderBy('conf_order', 'asc')->get();
+        foreach ($config as $key => $value) {
+
+            switch ($value->field_type) {
+                case 'input': // 相同name名稱需要加入array
+                    $config[$key]['conf_html'] =
+                        '<input type="text" class="lg" name="conf_content[]" value="' . $value->conf_content . '">';
+                    break;
+                case 'textarea': // 相同name名稱需要加入array
+                    $config[$key]['conf_html'] =
+                        '<textarea type="text" class="lg" name="conf_content[]">' . $value->conf_content . '</textarea>';
+                    break;
+                case 'radio': // 相同name名稱需要加入array
+                    $firstOrder = explode(',', trim($value->field_value));//1|開啟 , 0|關閉
+                    $radio = '';// 用於 字串相加
+                    foreach ($firstOrder as $tagvalue) {
+
+                        $secondOrder = explode('|', trim($tagvalue));
+                        $checked = $value->conf_content == $secondOrder[0] ? ' &nbsp; checked &nbsp; ' : '';
+                        $radio .= '<input type="radio" name="conf_content[]" value="' . $secondOrder[0] . '"
+                        ' . $checked . '> ' . $secondOrder[1] . ' &nbsp; ';//&nbsp; html空白
+
+                    }
+                    $config[$key]['conf_html'] = $radio;
+                    break;
+            }
+        }
+//        echo $config[0]['conf_html'] . '<br>';
+//
+//        echo $config[1]['conf_html'] . '<br>';
+//
+//        echo $config[2] ['conf_html'] . '<br>';
+
         return view('admin.config.index', compact('config'));
     }
 
@@ -159,5 +188,19 @@ class ConfigController extends CommonController
             ];
         }
         return $data;
+    }
+
+    public function changeContent(Request $request)
+    {
+//        dd($request->all());
+        foreach ($request['conf_content'] as $key => $value) {
+            $result = Config::where('conf_id', $request['conf_id'][$key])
+                ->update(['conf_content' => $request['conf_content'][$key]]);
+        }
+        if ($result) {
+            return redirect('admin/config');
+        } else {
+            return back()->with('errors', '設定更新失敗');
+        }
     }
 }
