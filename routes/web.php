@@ -50,14 +50,15 @@ Route::resource('admin/article', 'Admin\ArticleController'); // 文章 路由資
 Route::resource('admin/links', 'Admin\LinksController'); // 超連結 路由資源
 Route::resource('admin/navs', 'Admin\NavsController'); // 自定義導航 路由資源
 Route::resource('admin/config', 'Admin\ConfigController'); // 自定義導航 路由資源
-
+//
 Route::any('admin/changorder', 'Admin\CategoryController@changorder');// 文章 排序
 Route::any('admin/links/changorder', 'Admin\LinksController@changorder');// 超連結 排序
 Route::any('admin/navs/changorder', 'Admin\NavsController@changorder');// 自定義導航 排序
 Route::any('admin/config/changorder', 'Admin\ConfigController@changorder');// 設定檔 排序
-
 //
 Route::any('admin/upload', 'Admin\CommonController@uploadPhotoFile');// 上傳檔案
+Route::any('admin/config/changeContent', 'Admin\ConfigController@changeContent');// 設定檔 提交
+Route::any('admin/configFiles', 'Admin\ConfigController@configFile');// 網站配置設定檔案
 //
 //
 

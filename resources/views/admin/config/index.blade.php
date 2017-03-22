@@ -30,7 +30,7 @@
     {{--<!--結果頁快捷搜索框 結束-->--}}
 
     <!--搜索結果頁面 列表 開始-->
-    <form action="#" method="post">
+
         <div class="result_wrap">
             <div class="result_title">
                 <h3>設定檔列表</h3>
@@ -51,58 +51,51 @@
                     <tr>
                         <th class="tc" style="width: 8%">排序</th>
                         <th class="tc" style="width: 10%">ID</th>
-                        <th>設定檔名稱</th>
                         <th>設定檔標題</th>
-                        <th>設定檔地址</th>
+                        <th>設定檔名稱</th>
+                        <th>內容</th>
 
                         <th>操作</th>
                     </tr>
-                    @foreach($config as $value)
-                        <tr>
-                            <td class="tc" style="width: 5%">
-                                <input type="text"
-                                       pattern="[0-9]{2}"
-                                       name="ord[]"
-                                       min="0"
-                                       {{--placeholder="請輸入數字"--}}
-                                       style="width: 50%"
-                                       onchange="changorder($(this).val(),{{$value->conf_id}})"
-                                       value="{{$value->conf_order}}"
-                                >
-                            <td class="tc" style="width: 5%" name="conf_id[]">{{$value->conf_id}}</td>
-                            <td>
-                                <a href="#">{{$value->conf_name}}</a>
-                            </td>
-                            <td>{{$value->conf_title}}</td>
-                            <td>{{$value->conf_url}}</td>
-                            <td>
-                                <a href="{{url('admin/config/'.$value->conf_id.'/edit')}}">修改</a>
-                                <a href="javascript:" onclick="dellink({{$value->conf_id}})">刪除</a>
-                                {{--javascript:是表示在触发<a>默认动作时,执行一段JavaScript代码,
-                                而 javascript:; 表示什么都不执行,这样点击<a>时就没有任何反应.--}}
+                    <form action="{{url('admin/config/changeContent')}}" method="post">
+                        {{csrf_field()}}
+                        @foreach($config as $value)
+                            <input type="hidden" name="conf_id[]" value="{{$value->conf_id}}">
+                            <tr>
+                                <td class="tc" style="width: 5%">
+                                    <input type="text"
+                                           {{--pattern="[0-9]{2}"--}}
+                                           min="0"
+                                           {{--placeholder="請輸入數字"--}}
+                                           style="width: 50%"
+                                           onchange="changorder($(this).val(),{{$value->conf_id}})"
+                                           value="{{$value->conf_order}}"
+                                    >
+                                <td class="tc" style="width: 5%">{{$value->conf_id}}
+                                </td>
 
-                            </td>
-                        </tr>
+                                <td>
+                                    <a href="#">{{$value->conf_title}}</a>
+                                </td>
+                                <td>{{$value->conf_name}}</td>
+                                <td>{!!$value->conf_html !!}</td>
+                                <td>
+                                    <a href="{{url('admin/config/'.$value->conf_id.'/edit')}}">修改</a>
+                                    <a href="javascript:" onclick="dellink({{$value->conf_id}})">刪除</a>
+                                    {{--javascript:是表示在触发<a>默认动作时,执行一段JavaScript代码,
+                                    而 javascript:; 表示什么都不执行,这样点击<a>时就没有任何反应.--}}
+
+                                </td>
+                            </tr>
                     @endforeach
-                    {{--<!-- 怎麼把值傳到JS -->--}}
-                    {{--@foreach($data as $value)--}}
-                    {{--<tr>--}}
-                    {{--<td class="tc" style="width: 5%">--}}
-                    {{--<input type="number" name="ord[]"  min="0" value="0" style="width: 100%">--}}
-                    {{--<td class="tc" style="width: 5%" name="conf_id[]">{{$value->conf_id}}</td>--}}
-                    {{--<td>--}}
-                    {{--<a href="#">{{$value->_conf_name}}</a>--}}
-                    {{--</td>--}}
-                    {{--<td>{{$value['conf_title']}}</td>--}}
-                    {{--<td>{{$value->conf_view}}</td>--}}
-                    {{--<td>--}}
-                    {{--<a href="#">修改</a>--}}
-                    {{--<a href="#">刪除</a>--}}
-                    {{--</td>--}}
-                    {{--</tr>--}}
-                    {{--@endforeach--}}
-                    {{--<!-- 怎麼把值傳到JS -->--}}
+
                 </table>
+                <div class="btn-group">
+                    <br>
+                    <input type="submit" value="提交">
+                    <input type="button" class="back" onclick="history.go(-1)" value="返回">
+                </div>
+
             </div>
         </div>
     </form>

@@ -54,9 +54,9 @@
                 <tr>
                     <th>類型：</th>
                     <td>
-                        <input type="radio" name="field_type" value="input" checked>input
-                        <input type="radio" name="field_type" value="textarea">textarea
-                        <input type="radio" name="field_type" value="radio">radio
+                        <input type="radio" name="field_type" value="input" checked onclick="showValue()">input
+                        <input type="radio" name="field_type" value="textarea" onclick="showValue()">textarea
+                        <input type="radio" name="field_type" value="radio" onclick="showValue()">radio
                         <span><i class="fa fa-exclamation-circle yellow">
 
                             </i>類型:input textarea radio
@@ -70,7 +70,7 @@
                         <input type="text" class="lg " name="field_value"><br>
                         <span><i class="fa fa-exclamation-circle yellow">
 
-                            </i>類型值: 只有 radio 的情況下才需要配置 格式 1｜開啟 , 0｜關閉
+                            </i>類型值: 只有 radio 的情況下才需要配置 格式 1|開啟,0|關閉
                         </span>
                     </td>
                 </tr>
@@ -98,26 +98,27 @@
         </form>
     </div>
     <script>
-        //        onclick="showValue"
-        //        showValue(); // 初始化
-        //
-        //           function showValue() {
-        //               var typeValue = $('input[name=field_type]:checked').val(); // 標籤['屬性=值']
-        //               if (typeValue == 'radio') {
-        //                   $('.show_value').show();
-        //               } else {
-        //                   $('.show_value').hide();// 隐藏
-        //               }
-        //           }
-        $(function () {
-            // 標籤['屬性=值']
-            $('input[name=field_type]').change(function () {
-                if ($(this).val() == 'radio') {
-                    $('.show_value').show();
-                } else {
-                    $('.show_value').hide();// 隐藏
-                }
-            });
-        });
+        showValue(); // 初始化
+
+        function showValue() {
+            var typeValue = $('input[name=field_type]:checked').val(); // 標籤['屬性=值']
+            if (typeValue == 'radio') {
+                $('.show_value').show();
+            } else {
+                $('.show_value').hide();// 隐藏
+            }
+
+        }
+        //        $('.show_value').hide();// 初始
+        //        $(function () {
+        //            // 標籤['屬性=值']
+        //            $('input[name=field_type]').change(function () {
+        //                if ($(this).val() == 'radio') {
+        //                    $('.show_value').show();
+        //                } else {
+        //                    $('.show_value').hide();// 隐藏
+        //                }
+        //            });
+        //        });
     </script>
 @endsection

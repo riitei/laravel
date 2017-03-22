@@ -54,29 +54,62 @@
             <table class="add_tab">
                 <tbody>
                 <tr>
-                    <th><i class="require">*</i>設定檔名稱：</th>
+                    <th><i class="require">*</i>設定檔標題：</th>
                     <td>
-                        <input type="text" name="conf_name" value="{{$config->conf_name}}">
+                        <input type="text" name="conf_title" value="{{$config->conf_name}}">
                         <span><i class="fa fa-exclamation-circle yellow"></i>設定檔名稱必須填寫</span>
                     </td>
                 </tr>
                 <tr>
-                    <th>設定檔標題：</th>
+                    <th><i class="require">*</i>設定檔名稱：</th>
                     <td>
-                        <input type="text" class="lg" name="conf_title" value="{{$config->conf_title}}">
+                        <input type="text" class="lg" name="conf_name" value="{{$config->conf_title}}">
                         <p>標題可以寫30字</p>
                     </td>
                 </tr>
                 <tr>
-                    <th><i class="require">*</i>URL：</th>
+                    <th>類型：</th>
                     <td>
-                        <input name="conf_url" value="{{$config->conf_url}}">
+                        <input type="radio" name="field_type" value="input"
+                               @if($config->field_type=='input')
+                               checked
+                                @endif
+                        >input
+                        <input type="radio" name="field_type" value="textarea"
+                               @if($config->field_type=='textarea')
+                               checked
+                                @endif>textarea
+                        <input type="radio" name="field_type" value="radio"
+                               @if($config->field_type=='radio')
+                               checked
+                                @endif>radio
+                        <span><i class="fa fa-exclamation-circle yellow">
+
+                            </i>類型:input textarea radio
+                        </span>
+
+                    </td>
+                </tr>
+                <tr class="show_value">
+                    <th>類型值：</th>
+                    <td>
+                        <input type="text" class="lg " name="field_value"><br>
+                        <span><i class="fa fa-exclamation-circle yellow">
+
+                            </i>類型值: 只有 radio 的情況下才需要配置 格式 1|開啟,0|關閉
+                        </span>
                     </td>
                 </tr>
                 <tr>
-                    <th><i class="require">*</i>排序：</th>
+                    <th>排序：</th>
                     <td>
                         <input type="text" name="conf_order" value="{{$config->conf_order}}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>說明：</th>
+                    <td>
+                        <input type="text" name="conf_content" value="{{$config->conf_content}}">
                     </td>
                 </tr>
                 <tr>
@@ -90,5 +123,17 @@
             </table>
         </form>
     </div>
+    <script>
 
+        $(function () {
+            // 標籤['屬性=值']
+            $('input[name=field_type]').change(function () {
+                if ($(this).val() == 'radio') {
+                    $('.show_value').show();
+                } else {
+                    $('.show_value').hide();// 隐藏
+                }
+            });
+        });
+    </script>
 @endsection

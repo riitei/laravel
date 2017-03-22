@@ -48,6 +48,7 @@ class ConfigController extends CommonController
             if ($validator->passes()) {
 //                echo '驗證 成功';
                 $result = Config::create($confData);
+                $this->configFile();
                 if ($result) {
                     return redirect('admin/config');
                 } else {
@@ -67,6 +68,30 @@ class ConfigController extends CommonController
 
 //-------------------------------------------------------------------------------------
     // get admin/conf 全部設定列表
+
+    public function configFile()
+    {
+
+        // \Illuminate\Support\Facades\Config::get('web.web_title');      // 取得外部設定檔 (web.php)
+
+        $config = Config::pluck('conf_content', 'conf_name')->all();// 過濾要找的資料表欄位
+        //dd($config);
+        // var_export($config,true); // 输出或返回一个变量的字符串表示
+
+        $path = base_path() . '/config/web.php';
+        $str = '<?php return ' . var_export($config, true) . ';'; // 參考config/view.php 文件格式
+
+        file_put_contents($path, $str); // 寫文件
+        //   echo file_get_contents($path,true);
+
+
+        // dd($config);
+        // return view('admin.config.config');
+    }
+
+//-------------------------------------------------------------------------------------
+    // get admin/conf/create 添加設定
+
     public function index()
     {
         //  echo $key . "_" .
@@ -107,7 +132,9 @@ class ConfigController extends CommonController
     }
 
 //-------------------------------------------------------------------------------------
-    // get admin/conf/create 添加設定
+    // DELETE admin/conf/{conf}  {參數} 刪除單個設定 {conf}此參數無法透過 Request $request
+    // 因此 admin/conf/11111 把參數帶入 html name='conf_id' value=11111
+
     public function create()
     {
 
@@ -115,8 +142,9 @@ class ConfigController extends CommonController
     }
 
 //-------------------------------------------------------------------------------------
-    // DELETE admin/conf/{conf}  {參數} 刪除單個設定 {conf}此參數無法透過 Request $request
+    // put admin/conf/{conf} 更新設定 ,{conf}此參數無法透過 Request $request
     // 因此 admin/conf/11111 把參數帶入 html name='conf_id' value=11111
+
     public function destroy(Request $request, $conf_id)
     {
         $result = Config::where('conf_id', $conf_id)->delete();
@@ -133,18 +161,20 @@ class ConfigController extends CommonController
             ];
 
         }
+        $this->configFile();
         return $data;
     }
 
 //-------------------------------------------------------------------------------------
-    // put admin/conf/{conf} 更新設定 ,{conf}此參數無法透過 Request $request
-    // 因此 admin/conf/11111 把參數帶入 html name='conf_id' value=11111
+    // get admin/conf/{conf} 顯示單個設定訊息
+
     public function update(Request $request, $conf_id)
     {
         $config = $request->except('_method', '_token');
         $result = Config::where('conf_id', $conf_id)
             ->update($config);// 可以直接給 array
         //
+        $this->configFile();
         if ($result) {
             return redirect('admin/config');
         } else {
@@ -153,23 +183,23 @@ class ConfigController extends CommonController
     }
 
 //-------------------------------------------------------------------------------------
-    // get admin/conf/{conf} 顯示單個設定訊息
+    // get admin/conf/{conf}/edit 編輯設定
+
     public function show()
     {
 
     }
 
 //-------------------------------------------------------------------------------------
-    // get admin/conf/{conf}/edit 編輯設定
+    //----資源路由 結束
+//-------------------------------------------------------------------------------------
+
     public function edit(Request $request, $conf_id)
     {
         $config = Config::find($conf_id); //利用pk去找資料
         return view('admin.config.edit', compact('config'));
     }
 
-//-------------------------------------------------------------------------------------
-    //----資源路由 結束
-//-------------------------------------------------------------------------------------
     public function changorder(Request $request)
     {
 
@@ -192,11 +222,11 @@ class ConfigController extends CommonController
 
     public function changeContent(Request $request)
     {
-//        dd($request->all());
         foreach ($request['conf_content'] as $key => $value) {
             $result = Config::where('conf_id', $request['conf_id'][$key])
                 ->update(['conf_content' => $request['conf_content'][$key]]);
         }
+        $this->configFile();
         if ($result) {
             return redirect('admin/config');
         } else {
