@@ -12,7 +12,7 @@
 |
 */
 //
-Route::any('/', 'TestController@index');
+Route::any('/test', 'TestController@index');
 Route::any('upload','TestController@upload');
 //-----
 /*
@@ -20,6 +20,12 @@ Route::any('upload','TestController@upload');
  *    App\Http\Kernel 在 $routeMiddleware 註冊
  * 小心格式 [       ,'middleware'=>['web',.....]  ]
  **/
+Route::group(['middleware' => ['web']], function () {
+    Route::any('/', 'Home\IndexController@index');
+    Route::any('/cate', 'Home\IndexController@cate');
+    Route::any('/art', 'Home\IndexController@article');
+
+});
 Route::any('admin/check_code', 'admin\LoginController@verificationCode');
 Route::any('admin/login', 'admin\LoginController@login'); // 管理者登入 （不能寫在middleware）
 // 管理者網頁的集合
@@ -43,24 +49,24 @@ Route::group(['prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['web
 // |        | GET|HEAD   | admin/category/{category}/edit  | category.edit    | App\Http\Controllers\admin\CategoryController@edit                     | web,admin_login      |
 //-----
 */
+    Route::resource('category', 'CategoryController'); // 分類文章 路由資源
+    Route::resource('article', 'ArticleController'); // 文章 路由資源
+    Route::resource('links', 'LinksController'); // 超連結 路由資源
+    Route::resource('navs', 'NavsController'); // 自定義導航 路由資源
+    Route::resource('config', 'ConfigController'); // 自定義導航 路由資源
+//
+    Route::any('changorder', 'CategoryController@changorder');// 文章 排序
+    Route::any('links/changorder', 'LinksController@changorder');// 超連結 排序
+    Route::any('navs/changorder', 'NavsController@changorder');// 自定義導航 排序
+    Route::any('config/changorder', 'ConfigController@changorder');// 設定檔 排序
+//
+    Route::any('upload', 'CommonController@uploadPhotoFile');// 上傳檔案
+    Route::any('config/changeContent', 'ConfigController@changeContent');// 設定檔 提交
+    Route::any('configFiles', 'ConfigController@configFile');// 網站配置設定檔案
+//
+//
 });
 
-Route::resource('admin/category', 'Admin\CategoryController'); // 分類文章 路由資源
-Route::resource('admin/article', 'Admin\ArticleController'); // 文章 路由資源
-Route::resource('admin/links', 'Admin\LinksController'); // 超連結 路由資源
-Route::resource('admin/navs', 'Admin\NavsController'); // 自定義導航 路由資源
-Route::resource('admin/config', 'Admin\ConfigController'); // 自定義導航 路由資源
-//
-Route::any('admin/changorder', 'Admin\CategoryController@changorder');// 文章 排序
-Route::any('admin/links/changorder', 'Admin\LinksController@changorder');// 超連結 排序
-Route::any('admin/navs/changorder', 'Admin\NavsController@changorder');// 自定義導航 排序
-Route::any('admin/config/changorder', 'Admin\ConfigController@changorder');// 設定檔 排序
-//
-Route::any('admin/upload', 'Admin\CommonController@uploadPhotoFile');// 上傳檔案
-Route::any('admin/config/changeContent', 'Admin\ConfigController@changeContent');// 設定檔 提交
-Route::any('admin/configFiles', 'Admin\ConfigController@configFile');// 網站配置設定檔案
-//
-//
 
 Route::any('test', 'TestController@testDB');
 
