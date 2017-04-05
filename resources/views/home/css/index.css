@@ -401,7 +401,7 @@ h2.title_tj p {
     clear: both;
     margin: 10px 0 0 0;
     display: inline-block;
-    background: #f6f6f6 url(../images/time.jpg) 15px center no-repeat;
+    /*background: #f6f6f6 url(../images/time.jpg) 15px center no-repeat;*/
     line-height: 26px;
     height: 26px;
     color: #838383;

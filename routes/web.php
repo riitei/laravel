@@ -22,8 +22,9 @@ Route::any('upload','TestController@upload');
  **/
 Route::group(['middleware' => ['web']], function () {
     Route::any('/', 'Home\IndexController@index');
-    Route::any('/cate', 'Home\IndexController@cate');
-    Route::any('/art', 'Home\IndexController@article');
+    Route::any('/cate/{cate_id}', 'Home\IndexController@cate');
+    Route::any('/art/{art_id}', 'Home\IndexController@article');
+
 
 });
 Route::any('admin/check_code', 'admin\LoginController@verificationCode');

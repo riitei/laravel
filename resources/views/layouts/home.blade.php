@@ -14,7 +14,10 @@
 </head>
 <body>
 <header>
-    <div id="logo"><a href="{{url('/')}}"></a></div>
+    <a href="{{url('/')}}">
+        <img src="{{asset('resources/views/home/images/home.jpg')}}">
+    </a>
+
     <nav class="topnav" id="topnav">
         @foreach($navs as $value)
             <a href="{{$value->nav_url}}"><span>{{$value->nav_name_tw}}</span>
@@ -24,11 +27,36 @@
     </nav>
 </header>
 
-@yield('home-content')<!--引用模板文件，繼承後替換內容-->
+@section('home-content')<!--引用模板文件，繼承後替換內容-->
+<h3>
+                    <p>最新<span>文章</span></p>
+                
+</h3>
+            
+<ul class="rank">
+    @foreach($article_new as $value)
+        <li>
+            <a href="{{url('art/'.$value->art_id)}}" title="{{$value->art_title}}"
+               target="_blank">{{$value->art_title}}</a>
+        </li>@endforeach  
+</ul>
+            
+<h3 class="ph">
+                    <p>點擊<span>排行</span></p>
+                
+</h3>
+            
+<ul class="paih">
+                     @foreach($article_hot as $value)
+        <li><a href="{{url('art/'.$value->art_id)}}" title="{{$value->art_title}}"
+               target="_blank">{{$value->art_title}}</a></li>@endforeach
+                
+</ul>
 
+
+@show
 
 <footer>
-    {{--Design by 后盾网 <a href="http://www.miitbeian.gov.cn/" target="_blank">http://www.houdunwang.com</a> --}}
     <p><a href="/">網站統計</a>
     </p>
 </footer>
