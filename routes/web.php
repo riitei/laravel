@@ -203,4 +203,3 @@ Route::get('user/{id}/{name}', function ($id, $name) {
     //
 })->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
 //---
-//**

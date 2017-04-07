@@ -41,6 +41,10 @@ class IndexController extends CommonController
 
     public function cate($cate_id)
     {
+        // 查看次數自增
+
+        Category::where('cate_id', $cate_id)->increment('cate_view');
+
         //$cate = Category::where('cate_id',$cate_id)->get();
         $cate = Category::find($cate_id);
         // 圖文列表 前2篇  （分頁效果）
@@ -53,10 +57,22 @@ class IndexController extends CommonController
         return view('home.list', compact('cate', 'article', 'subCate'));
     }
 
-    public function article()
+    public function article($art_id)
     {
+        // 查看次數自增
+
+        Article::where('art_id', $art_id)->increment('art_view');
+//        $view = Article::where('art_id', $art_id)->first();
+//        Article::where('art_id', $art_id)->update(['art_view' => ($view->art_view + 1)]);
+
+        // $article = Article::find($art_id);
+        $article = Article::Join('category', 'article.cate_id', '=', 'category.cate_id')->
+        where('art_id', $art_id)->first();
+        $article['UP'] = Article::where('art_id', '<', $art_id)->orderBy('art_id', 'desc')->first();
+        $article['DN'] = Article::where('art_id', '>', $art_id)->orderBy('art_id', 'asc')->first();
+        $article_data = Article::where('cate_id', $art_id)->take(2)->get();
         // $navs =  Navs::orderBy('nav_order','asc')->get(); // 網站超連結導航
         // 重複 寫在 建構值
-        return view('home.new');
+        return view('home.new', compact('article', 'article_data'));
     }
 }

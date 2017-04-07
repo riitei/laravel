@@ -27,7 +27,7 @@
                 <ul class="nlist">
                     <p>{{$value->art_description}}</p>
                     <a title="{{$value->art_title}}"
-                       href="{{url('article/'.$value->art_id)}}"
+                       href="{{url('art/'.$value->art_id)}}"
                        target="_blank" class="readmore">閱讀全文>> </a>
                 </ul>
                 <div class="line"></div>

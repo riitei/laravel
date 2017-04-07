@@ -56,9 +56,9 @@
 
 @show
 
-<footer>
-    <p><a href="/">網站統計</a>
-    </p>
-</footer>
+{{--<footer>--}}
+{{--<p><a href="/">網站統計</a>--}}
+{{--</p>--}}
+{{--</footer>--}}
 </body>
 </html>
