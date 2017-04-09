@@ -70,13 +70,13 @@
                 <tr>
                     <th><i class="require">*</i>URL：</th>
                     <td>
-                        <input name="nav_url" value="{{$navs->nav_url}}">
+                        <input name="nav_url" style="width: 500px" value="{{$navs->nav_url}}">
                     </td>
                 </tr>
                 <tr>
                     <th><i class="require">*</i>排序：</th>
                     <td>
-                        <input type="text" name="nav_order" value="{{$navs->nav_order}}">
+                        <input type="text" name="nav_order" style="width: 20px" value="{{$navs->nav_order}}">
                     </td>
                 </tr>
                 <tr>

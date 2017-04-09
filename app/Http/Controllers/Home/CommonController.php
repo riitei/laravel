@@ -13,7 +13,6 @@ class CommonController extends Controller
     public function __construct()
     {
         $navs = Navs::orderBy('nav_order', 'asc')->get(); // 網站超連結導航
-
         // 點擊量 最高六篇文章
         $article_hot = Article::orderBy('art_view', 'desc')->take(4)->get();
 

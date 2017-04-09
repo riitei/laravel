@@ -54,13 +54,13 @@
                 <tr>
                     <th><i class="require">*</i>URL：</th>
                     <td>
-                        <input type="text" class="lg " name="nav_url" value="http://">
+                        <input type="text" class="lg " name="nav_url">
                     </td>
                 </tr>
                 <tr>
                     <th><i class="require">*</i>排序：</th>
                     <td>
-                        <input type="text" name="nav_order" style="width: 50px" value="0">
+                        <input type="text" name="nav_order" style="width: 10px" value="0">
                     </td>
                 </tr>
                 <tr>

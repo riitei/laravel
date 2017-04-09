@@ -14,17 +14,29 @@
 </head>
 <body>
 <header>
-    <a href="{{url('/')}}">
-        <img src="{{asset('resources/views/home/images/home.jpg')}}">
-    </a>
+    <table>
+        <tr>
+            <td>
+                <a href="{{url('/')}}">
+                    <img src="{{asset('resources/views/home/images/home.jpg')}}">
+                </a>
+            </td>
+            <td>
+                &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+            @foreach($navs as $value)
+                <td style="letter-spacing: 10px ; background: cornsilk">
+                    <a href="{{url($value->nav_url)}}">{{$value->nav_name_tw}}</a>
 
-    <nav class="topnav" id="topnav">
-        @foreach($navs as $value)
-            <a href="{{$value->nav_url}}"><span>{{$value->nav_name_tw}}</span>
-                <span class="en">{{$value->nav_name_en}}</span></a>
+                </td>
+            @endforeach
+        </tr>
 
-        @endforeach
-    </nav>
+    </table>
+
+
 </header>
 
 @section('home-content')<!--引用模板文件，繼承後替換內容-->
