@@ -1,29 +1,25 @@
 @extends('layouts.admin')
 @section('admin-content')
 <!--面包屑导航 开始-->
-<div class="crumb_warp">
+
     <!--<i class="fa fa-bell"></i> 歡迎使用登陸網站後台，建站的首選工具。-->
-    <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首頁</a> &raquo; 添加文章分類
-</div>
+<a href="{{url('admin/info')}}">首頁</a> &raquo; 添加文章分類
 <!--面包屑导航 结束-->
 
 <!--結果集標題與導航組件 開始-->
-<div class="result_wrap">
-    <div class="result_title">
-        <h3>快捷操作</h3>
-    </div>
-    <div class="result_content">
-        <div class="short_wrap">
-            <a href="#"><i class="fa fa-plus"></i>新增文章</a>
+
+
+<h3>快捷操作</h3>
+
+
+
+<a href="#"><i class="fa fa-plus"></i>新增文章</a>
             <a href="#"><i class="fa fa-recycle"></i>批量删除</a>
             <a href="#"><i class="fa fa-refresh"></i>更新排序</a>
-        </div>
-    </div>
-</div>
 <!--結果集標題與導航組件 結束-->
 
-<div class="result_wrap">
-    <form action="#" method="post">
+
+<form action="#" method="post">
         <table class="add_tab">
             <tbody>
             <tr>
@@ -37,7 +33,7 @@
                 </td>
             </tr>
             <tr>
-                <th><i class="require">*</i>标题：</th>
+                <th>标题：</th>
                 <td>
                     <input type="text" class="lg" name="">
                     <p>标题可以写30个字</p>
@@ -98,6 +94,5 @@
             </tbody>
         </table>
     </form>
-</div>
 
 @endsection

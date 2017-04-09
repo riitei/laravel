@@ -1,16 +1,15 @@
 @extends('layouts.admin')
 @section('admin-content')
     <!--麵包屑導航 開始-->
-    <div class="crumb_warp">
+
         <!--<i class="fa fa-bell"></i> 歡迎使用登陸網站後台，建站的首選工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首頁</a> &raquo; 文章管理
-    </div>
+    <a href="{{url('admin/info')}}">首頁</a> &raquo; 文章管理
     <!--麵包屑導航 结束-->
 
     <!--結果集標題與導航組件 開始-->
-    <div class="result_wrap">
-        <div class="result_title">
-            <h3>編輯文章</h3>
+
+
+    <h3>編輯文章</h3>
             @if(count($errors)>0)
                 <div class="mark">
                     @if(is_object($errors))
@@ -22,18 +21,14 @@
                     @endif
                 </div>
             @endif
-        </div>
-        <div class="result_content">
-            <div class="short_wrap">
-                <a href="{{url('admin/article/create')}}"><i class="fa fa-plus"></i>添加文章</a>
+
+
+    <a href="{{url('admin/article/create')}}"><i class="fa fa-plus"></i>添加文章</a>
                 <a href="{{url('admin/article')}}"><i class="fa fa-recycle"></i>全部文章</a>
-            </div>
-        </div>
-    </div>
     <!--結果集標題與導航組件 结束-->
 
-    <div class="result_wrap">
-        <form action="{{url('admin/article/'.$article->art_id)}}" method="post">
+
+    <form action="{{url('admin/article/'.$article->art_id)}}" method="post">
             {{method_field('put')}}
             {{csrf_field()}}
             <table class="add_tab">
@@ -158,7 +153,9 @@
 
                         </script>
                         {{--實作--}}
-                        <script type="text/javascript">
+                        <
+                        script;
+                        type = "text/javascript" >;
                             var ue = UE.getEditor('editor');
                         </script>
                         {{--ueditor編輯器樣式矯正--}}
@@ -191,6 +188,5 @@
                 </tbody>
             </table>
         </form>
-    </div>
 
 @endsection

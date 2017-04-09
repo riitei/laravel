@@ -31,9 +31,7 @@ class IndexController extends CommonController
 
         // 分享鏈結
         $article_link = Links::orderBy('link_order', 'asc')->get();
-
         // 配置項
-
         return view('home.index', compact
         ('article_url', 'article_photo', 'article_link'));
 

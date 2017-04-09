@@ -1,16 +1,16 @@
 @extends('layouts.admin')
 @section('admin-content')
     <!--面包屑导航 开始-->
-    <div class="crumb_warp">
+
         <!--<i class="fa fa-bell"></i> 歡迎使用登陸網站後台，建站的首選工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首頁</a> &raquo; 自定義導航 管理
+    <a href="{{url('admin/info')}}">首頁</a> &raquo; 自定義導航 管理
     </div>
     <!--面包屑导航 结束-->
 
     <!--結果集標題與導航組件 開始-->
-    <div class="result_wrap">
-        <div class="result_title">
-            <h3>添加 超連結</h3>
+
+
+    <h3>添加 超連結</h3>
             @if(count($errors)>0)
                 <div class="mark" style="color: red">
                     @if(is_object($errors))
@@ -23,8 +23,8 @@
                 </div>
             @endif
         </div>
-        <div class="result_content">
-            <div class="short_wrap">
+
+
                 <a href="{{url('admin/navs/create')}}"><i class="fa fa-plus"></i>新增自定義導航</a>
                 <a href="{{url('admin/navs')}}"><i class="fa fa-recycle"></i>全部自定義導航</a>
             </div>
@@ -32,8 +32,8 @@
     </div>
     <!--結果集標題與導航組件 結束-->
 
-    <div class="result_wrap">
-        <form action="{{url('admin/navs')}}" method="post">
+
+                <form action="{{url('admin/navs')}}" method="post">
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>

@@ -37,9 +37,7 @@
                 </li>
             </ul>
         </form>
-        <p><a href="#">返回首頁</a> &copy; 2017 Powered by
-            <a href="http://laravel.riitei.com" target="_blank">
-                http://laravel.riitei.com</a></p>
+
     </div>
 </div>
 </body>

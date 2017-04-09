@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('admin-content')
     <!--麵包屑導航 開始-->
-    <div class="crumb_warp">
+
         <!--<i class="fa fa-bell"></i> 歡迎使用登陸網站後台，建站的首選工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首頁</a> &raquo; 全部分類
+    <a href="{{url('admin/info')}}">首頁</a> &raquo; 全部分類
     </div>
     <!--麵包屑導航 結束-->
 
@@ -31,23 +31,19 @@
 
     <!--搜索結果頁面 列表 開始-->
     <form action="#" method="post">
-        <div class="result_wrap">
-            <div class="result_title">
-                <h3>分類管理</h3>
-            </div>
-            <!--快捷導航 開始-->
-            <div class="result_content">
-                <div class="short_wrap">
-                    <a href="{{url('admin/category/create')}}"><i class="fa fa-plus"></i>新增分類</a>
-                    <a href="{{url('admin/category')}}"><i class="fa fa-recycle"></i>全部分類</a>
-                </div>
-            </div>
-            <!--快捷導航 結束-->
-        </div>
 
-        <div class="result_wrap">
-            <div class="result_content">
-                <table class="list_tab">
+
+        <h3>分類管理</h3>
+            <!--快捷導航 開始-->
+
+
+        <a href="{{url('admin/category/create')}}"><i class="fa fa-plus"></i>新增分類</a>
+                    <a href="{{url('admin/category')}}"><i class="fa fa-recycle"></i>全部分類</a>
+
+        <!--快捷導航 結束-->
+
+
+        <table class="list_tab">
                     <tr>
                         <th class="tc" style="width: 10%">排序</th>
                         <th class="tc" style="width: 10%">ID</th>
@@ -102,8 +98,6 @@
                     {{--@endforeach--}}
                     {{--<!-- 怎麼把值傳到JS -->--}}
                 </table>
-            </div>
-        </div>
     </form>
     <!--搜索結果頁面 列表 結束-->
     {{--第三方JS layer http://layer.layui.com--}}

@@ -1,15 +1,13 @@
 @extends('layouts.admin')
 @section('admin-content')
     <!--麵包屑導航 開始-->
-    <div class="crumb_warp">
+    <div>
         <!--<i class="fa fa-bell"></i> 歡迎使用登陸網站後台，建站的首選工具。-->
-        <i class="fa fa-home"></i> <a href="{{url('admin/info')}}">首頁</a> &raquo; 文章管理
+        <a href="{{url('admin/info')}}">首頁</a> &raquo; 文章管理
     </div>
     <!--麵包屑導航 结束-->
 
     <!--結果集標題與導航組件 開始-->
-    <div class="result_wrap">
-        <div class="result_title">
             <h3>添加文章</h3>
             @if(count($errors)>0)
                 <div class="mark">
@@ -22,23 +20,16 @@
                     @endif
                 </div>
             @endif
-        </div>
-        <div class="result_content">
-            <div class="short_wrap">
-                <a href="{{url('admin/article/create')}}"><i class="fa fa-plus"></i>添加文章</a>
-                <a href="{{url('admin/article')}}"><i class="fa fa-recycle"></i>全部文章</a>
-            </div>
-        </div>
-    </div>
+    <a href="{{url('admin/article/create')}}">添加文章</a>
+    <a href="{{url('admin/article')}}">全部文章</a>
     <!--結果集標題與導航組件 结束-->
 
-    <div class="result_wrap">
         <form action="{{url('admin/article')}}" method="post">
             {{csrf_field()}}
             <table class="add_tab">
                 <tbody>
                 <tr>
-                    <th width="120"><i class="require">*</i>父集文章：</th>
+                    <th width="120">父集文章：</th>
                     <td>
                         <select name="cate_id">
                             <option value="0">==頂級文章==</option>
@@ -147,7 +138,9 @@
                                 style=" width:860px;height:500px;">
                         </script>
                         {{--實作--}}
-                        <script type="text/javascript">
+                        <
+                        script;
+                        type = "text/javascript" >;
                             var ue = UE.getEditor('editor');
                         </script>
                         {{--ueditor編輯器樣式矯正--}}
