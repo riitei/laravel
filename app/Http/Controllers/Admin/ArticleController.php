@@ -27,7 +27,7 @@ class ArticleController extends CommonController
     {
 
         if ($articleData = $request->except('_token')) {
-//
+            //
 //            // 驗證規則
 //            // http://laravelacademy.org/post/6768.html
 //            // confirmed

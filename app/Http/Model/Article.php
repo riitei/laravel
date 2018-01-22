@@ -19,4 +19,8 @@ class Article extends Model
      ＊ 当然，这两个属性你只能同时使用其中一个——而不能一起使用，
      ＊ 因为它们是互斥的。下面的例子中，除了 price 之外的所有属性都是可以赋值的：
     */
+    public function acticle(\Request $request)
+    {
+        Article::all();
+    }
 }

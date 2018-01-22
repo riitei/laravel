@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.4.17 on 2017-04-09.
+ * Generated for Laravel 5.4.23 on 2017-05-17.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1089,14 +1089,14 @@ namespace Illuminate\Support\Facades {
             //Method inherited from \Illuminate\Container\Container            
             return \Illuminate\Foundation\Application::factory($abstract);
         }
-
+        
         /**
          * Resolve the given type with the given parameter overrides.
          *
          * @param string $abstract
          * @param array $parameters
-         * @return mixed
-         * @static
+         * @return mixed 
+         * @static 
          */
         public static function makeWith($abstract, $parameters)
         {
@@ -1354,13 +1354,13 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $command
          * @param array $parameters
-         * @return void 
+         * @return \Illuminate\Foundation\Bus\PendingDispatch 
          * @static 
          */
         public static function queue($command, $parameters = array())
         {
             //Method inherited from \Illuminate\Foundation\Console\Kernel            
-            \App\Console\Kernel::queue($command, $parameters);
+            return \App\Console\Kernel::queue($command, $parameters);
         }
         
         /**
@@ -1884,6 +1884,18 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if the current user is authenticated.
          *
+         * @return \App\User 
+         * @throws \Illuminate\Auth\AuthenticationException
+         * @static 
+         */
+        public static function authenticate()
+        {
+            return \Illuminate\Auth\SessionGuard::authenticate();
+        }
+        
+        /**
+         * Determine if the current user is authenticated.
+         *
          * @return bool 
          * @static 
          */
@@ -1904,15 +1916,28 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Determine if the current user is authenticated.
+         * Register a custom macro.
          *
-         * @return \App\User 
-         * @throws \Illuminate\Auth\AuthenticationException
+         * @param string $name
+         * @param callable $macro
+         * @return void 
          * @static 
          */
-        public static function authenticate()
+        public static function macro($name, $macro)
         {
-            return \Illuminate\Auth\SessionGuard::authenticate();
+            \Illuminate\Auth\SessionGuard::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Auth\SessionGuard::hasMacro($name);
         }
         
     }         
@@ -2985,86 +3010,6 @@ namespace Illuminate\Support\Facades {
         
     }         
 
-    class Crypt {
-        
-        /**
-         * Determine if the given key and cipher combination is valid.
-         *
-         * @param string $key
-         * @param string $cipher
-         * @return bool 
-         * @static 
-         */
-        public static function supported($key, $cipher)
-        {
-            return \Illuminate\Encryption\Encrypter::supported($key, $cipher);
-        }
-        
-        /**
-         * Encrypt the given value.
-         *
-         * @param mixed $value
-         * @param bool $serialize
-         * @return string 
-         * @throws \Illuminate\Contracts\Encryption\EncryptException
-         * @static 
-         */
-        public static function encrypt($value, $serialize = true)
-        {
-            return \Illuminate\Encryption\Encrypter::encrypt($value, $serialize);
-        }
-        
-        /**
-         * Encrypt a string without serialization.
-         *
-         * @param string $value
-         * @return string 
-         * @static 
-         */
-        public static function encryptString($value)
-        {
-            return \Illuminate\Encryption\Encrypter::encryptString($value);
-        }
-        
-        /**
-         * Decrypt the given value.
-         *
-         * @param mixed $payload
-         * @param bool $unserialize
-         * @return string 
-         * @throws \Illuminate\Contracts\Encryption\DecryptException
-         * @static 
-         */
-        public static function decrypt($payload, $unserialize = true)
-        {
-            return \Illuminate\Encryption\Encrypter::decrypt($payload, $unserialize);
-        }
-        
-        /**
-         * Decrypt the given string without unserialization.
-         *
-         * @param string $payload
-         * @return string 
-         * @static 
-         */
-        public static function decryptString($payload)
-        {
-            return \Illuminate\Encryption\Encrypter::decryptString($payload);
-        }
-        
-        /**
-         * Get the encryption key.
-         *
-         * @return string 
-         * @static 
-         */
-        public static function getKey()
-        {
-            return \Illuminate\Encryption\Encrypter::getKey();
-        }
-        
-    }         
-
     class DB {
         
         /**
@@ -4079,7 +4024,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|\Closure $listener
          * @param bool $wildcard
-         * @return mixed 
+         * @return \Closure 
          * @static 
          */
         public static function makeListener($listener, $wildcard = false)
@@ -4749,6 +4694,17 @@ namespace Illuminate\Support\Facades {
         public static function forUser($user)
         {
             return \Illuminate\Auth\Access\Gate::forUser($user);
+        }
+        
+        /**
+         * Get all of the defined abilities.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function abilities()
+        {
+            return \Illuminate\Auth\Access\Gate::abilities();
         }
         
     }         
@@ -5574,6 +5530,31 @@ namespace Illuminate\Support\Facades {
         public static function setQueue($queue)
         {
             return \Illuminate\Mail\Mailer::setQueue($queue);
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro)
+        {
+            \Illuminate\Mail\Mailer::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function hasMacro($name)
+        {
+            return \Illuminate\Mail\Mailer::hasMacro($name);
         }
         
     }         
@@ -6999,7 +6980,7 @@ namespace Illuminate\Support\Facades {
          * ("Client-Ip" for instance), configure it via "setTrustedHeaderName()" with
          * the "client-ip" key.
          *
-         * @return string The client IP address
+         * @return string|null The client IP address
          * @see getClientIps()
          * @see http://en.wikipedia.org/wiki/X-Forwarded-For
          * @static 
@@ -7102,7 +7083,7 @@ namespace Illuminate\Support\Facades {
          * If your reverse proxy uses a different header name than "X-Forwarded-Port",
          * configure it via "setTrustedHeaderName()" with the "client-port" key.
          *
-         * @return string 
+         * @return int|string can be a string if fetched from the server bag
          * @static 
          */
         public static function getPort()
@@ -9926,7 +9907,7 @@ namespace Illuminate\Support\Facades {
          * Store the uploaded file on the disk.
          *
          * @param string $path
-         * @param \Illuminate\Http\UploadedFile $file
+         * @param \Illuminate\Http\File|\Illuminate\Http\UploadedFile $file
          * @param array $options
          * @return string|false 
          * @static 
@@ -10590,6 +10571,20 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Register a custom implicit validator extension.
+         *
+         * @param string $rule
+         * @param \Closure|string $extension
+         * @param string $message
+         * @return void 
+         * @static 
+         */
+        public static function extendDependent($rule, $extension, $message = null)
+        {
+            \Illuminate\Validation\Factory::extendDependent($rule, $extension, $message);
+        }
+        
+        /**
          * Register a custom implicit validator message replacer.
          *
          * @param string $rule
@@ -10679,7 +10674,7 @@ namespace Illuminate\Support\Facades {
         {
             return \Illuminate\View\Factory::make($view, $data, $mergeData);
         }
-
+        
         /**
          * Get the rendered content of the view based on a given condition.
          *
@@ -10687,8 +10682,8 @@ namespace Illuminate\Support\Facades {
          * @param string $view
          * @param array $data
          * @param array $mergeData
-         * @return string
-         * @static
+         * @return string 
+         * @static 
          */
         public static function renderWhen($condition, $view, $data = array(), $mergeData = array())
         {
@@ -10995,32 +10990,6 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
-         * Register a view composer event.
-         *
-         * @param array|string $views
-         * @param \Closure|string $callback
-         * @return array 
-         * @static 
-         */
-        public static function composer($views, $callback)
-        {
-            return \Illuminate\View\Factory::composer($views, $callback);
-        }
-        
-        /**
-         * Register a view creator event.
-         *
-         * @param array|string $views
-         * @param \Closure|string $callback
-         * @return array 
-         * @static 
-         */
-        public static function creator($views, $callback)
-        {
-            return \Illuminate\View\Factory::creator($views, $callback);
-        }
-        
-        /**
          * Start a component rendering process.
          *
          * @param string $name
@@ -11069,6 +11038,19 @@ namespace Illuminate\Support\Facades {
         }
         
         /**
+         * Register a view creator event.
+         *
+         * @param array|string $views
+         * @param \Closure|string $callback
+         * @return array 
+         * @static 
+         */
+        public static function creator($views, $callback)
+        {
+            return \Illuminate\View\Factory::creator($views, $callback);
+        }
+        
+        /**
          * Register multiple view composers via an array.
          *
          * @param array $composers
@@ -11078,6 +11060,19 @@ namespace Illuminate\Support\Facades {
         public static function composers($composers)
         {
             return \Illuminate\View\Factory::composers($composers);
+        }
+        
+        /**
+         * Register a view composer event.
+         *
+         * @param array|string $views
+         * @param \Closure|string $callback
+         * @return array 
+         * @static 
+         */
+        public static function composer($views, $callback)
+        {
+            return \Illuminate\View\Factory::composer($views, $callback);
         }
         
         /**
@@ -11385,13 +11380,14 @@ namespace Illuminate\Support\Facades {
 namespace {
 
 
-    use Illuminate\Support\Arr;
-    use Illuminate\Support\Str;
-    use Illuminate\Support\Collection;
-    use Illuminate\Support\Debug\Dumper;
-    use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Debug\Dumper;
+use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\HigherOrderTapProxy;
 
-    if (!function_exists('append_config')) {
+if (! function_exists('append_config')) {
     /**
      * Assign high numeric IDs to a config item to force appending.
      *
@@ -11891,11 +11887,11 @@ if (! function_exists('dd')) {
      * @param  mixed
      * @return void
      */
-    function dd()
+    function dd(...$args)
     {
-        array_map(function ($x) {
+        foreach ($args as $x) {
             (new Dumper)->dump($x);
-        }, func_get_args());
+        }
 
         die(1);
     }
@@ -12255,11 +12251,15 @@ if (! function_exists('tap')) {
      * Call the given Closure with the given value then return the value.
      *
      * @param  mixed  $value
-     * @param  callable  $callback
+     * @param  callable|null  $callback
      * @return mixed
      */
-    function tap($value, $callback)
+    function tap($value, $callback = null)
     {
+        if (is_null($callback)) {
+            return new HigherOrderTapProxy($value);
+        }
+
         $callback($value);
 
         return $value;
@@ -12354,8 +12354,6 @@ if (! function_exists('with')) {
     
     class Cookie extends \Illuminate\Support\Facades\Cookie {}
     
-    class Crypt extends \Illuminate\Support\Facades\Crypt {}
-    
     class DB extends \Illuminate\Support\Facades\DB {}
     
     class Event extends \Illuminate\Support\Facades\Event {}
@@ -12399,6 +12397,18 @@ if (! function_exists('with')) {
     class View extends \Illuminate\Support\Facades\View {}
     
     class Eloquent extends \Illuminate\Database\Eloquent\Model {    
+        /**
+         * Create and return and un-saved model instance.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function make($attributes = array())
+        {
+            return \Illuminate\Database\Eloquent\Builder::make($attributes);
+        }
+        
         /**
          * Register a new global scope.
          *
@@ -12462,7 +12472,7 @@ if (! function_exists('with')) {
         /**
          * Add a basic where clause to the query.
          *
-         * @param string|\Closure $column
+         * @param string|array|\Closure $column
          * @param string $operator
          * @param mixed $value
          * @param string $boolean
@@ -12821,6 +12831,18 @@ if (! function_exists('with')) {
         }
         
         /**
+         * Create a new instance of the model being queried.
+         *
+         * @param array $attributes
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function newModelInstance($attributes = array())
+        {
+            return \Illuminate\Database\Eloquent\Builder::newModelInstance($attributes);
+        }
+        
+        /**
          * Get the underlying query builder instance.
          *
          * @return \Illuminate\Database\Query\Builder 
@@ -12911,53 +12933,53 @@ if (! function_exists('with')) {
         {
             return \Illuminate\Database\Eloquent\Builder::getMacro($name);
         }
-
+        
         /**
          * Chunk the results of the query.
          *
          * @param int $count
          * @param callable $callback
-         * @return bool
-         * @static
+         * @return bool 
+         * @static 
          */
         public static function chunk($count, $callback)
         {
             return \Illuminate\Database\Eloquent\Builder::chunk($count, $callback);
         }
-
+        
         /**
          * Execute a callback over each item while chunking.
          *
          * @param callable $callback
          * @param int $count
-         * @return bool
-         * @static
+         * @return bool 
+         * @static 
          */
         public static function each($callback, $count = 1000)
         {
             return \Illuminate\Database\Eloquent\Builder::each($callback, $count);
         }
-
+        
         /**
          * Execute the query and get the first result.
          *
          * @param array $columns
-         * @return mixed
-         * @static
+         * @return mixed 
+         * @static 
          */
         public static function first($columns = array())
         {
             return \Illuminate\Database\Eloquent\Builder::first($columns);
         }
-
+        
         /**
          * Apply the callback's query changes if the given "value" is true.
          *
          * @param mixed $value
          * @param \Closure $callback
          * @param \Closure $default
-         * @return mixed
-         * @static
+         * @return mixed 
+         * @static 
          */
         public static function when($value, $callback, $default = null)
         {
@@ -13256,13 +13278,13 @@ if (! function_exists('with')) {
         {
             return \Illuminate\Database\Query\Builder::crossJoin($table, $first, $operator, $second);
         }
-
+        
         /**
          * Pass the query to a given callback.
          *
          * @param \Closure $callback
-         * @return \Illuminate\Database\Query\Builder
-         * @static
+         * @return \Illuminate\Database\Query\Builder 
+         * @static 
          */
         public static function tap($callback)
         {
@@ -13798,13 +13820,13 @@ if (! function_exists('with')) {
         {
             return \Illuminate\Database\Query\Builder::orderBy($column, $direction);
         }
-
+        
         /**
          * Add a descending "order by" clause to the query.
          *
          * @param string $column
-         * @return $this
-         * @static
+         * @return $this 
+         * @static 
          */
         public static function orderByDesc($column)
         {
